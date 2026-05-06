@@ -3,8 +3,8 @@ title = "[读论文] Agent设计模式目录"
 date = "2025-04-15"
 description = "对于agent软件设计中常见问题的可重用解决方案，《Agent design pattern catalogue》对其中的常用组件进行了收录和整理"
 tags = [
- “LLM”,
- “Agent”
+ "LLM",
+ "Agent"
 ]
 categories = [
  "大模型技术",
