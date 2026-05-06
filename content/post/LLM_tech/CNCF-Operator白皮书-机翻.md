@@ -4,6 +4,7 @@ date: 2025-12-01
 description: "CNCF Operator White Paper 最终版中英双语机翻"
 tags: ["Kubernetes", "Operator", "云原生"]
 categories: ["分布式系统"]
+image: "/img/02_1_operator_pattern.png"
 ---
 
 # CNCF Operator 白皮书 - 最终版 CNCF Operator White Paper - Final Version
