@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Tags on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/tags/</link>
+        <description>Recent content in Tags on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Mon, 24 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Async</title>
+        <link>http://101.200.73.250:80/tags/async/</link>
+        <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/async/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Python</title>
+        <link>http://101.200.73.250:80/tags/python/</link>
+        <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/python/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>LLM</title>
+        <link>http://101.200.73.250:80/tags/llm/</link>
+        <pubDate>Wed, 12 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/llm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>深度学习</title>
+        <link>http://101.200.73.250:80/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
+        <pubDate>Wed, 12 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>RAG</title>
+        <link>http://101.200.73.250:80/tags/rag/</link>
+        <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/rag/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>设计模式</title>
+        <link>http://101.200.73.250:80/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+        <pubDate>Sat, 19 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>机器学习</title>
+        <link>http://101.200.73.250:80/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
+        <pubDate>Tue, 24 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>KMP</title>
+        <link>http://101.200.73.250:80/tags/kmp/</link>
+        <pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/kmp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>算法</title>
+        <link>http://101.200.73.250:80/tags/%E7%AE%97%E6%B3%95/</link>
+        <pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/%E7%AE%97%E6%B3%95/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Azure</title>
+        <link>http://101.200.73.250:80/tags/azure/</link>
+        <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/azure/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VPS</title>
+        <link>http://101.200.73.250:80/tags/vps/</link>
+        <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/vps/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>网络代理</title>
+        <link>http://101.200.73.250:80/tags/%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/</link>
+        <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Mstsc</title>
+        <link>http://101.200.73.250:80/tags/mstsc/</link>
+        <pubDate>Fri, 26 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/mstsc/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Windows</title>
+        <link>http://101.200.73.250:80/tags/windows/</link>
+        <pubDate>Fri, 26 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/windows/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SSH</title>
+        <link>http://101.200.73.250:80/tags/ssh/</link>
+        <pubDate>Thu, 25 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/ssh/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VPN</title>
+        <link>http://101.200.73.250:80/tags/vpn/</link>
+        <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/vpn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>虚拟机</title>
+        <link>http://101.200.73.250:80/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</link>
+        <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>http://101.200.73.250:80/tags/linux/</link>
+        <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>WSL</title>
+        <link>http://101.200.73.250:80/tags/wsl/</link>
+        <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/wsl/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Web</title>
+        <link>http://101.200.73.250:80/tags/web/</link>
+        <pubDate>Tue, 14 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/web/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>后端开发</title>
+        <link>http://101.200.73.250:80/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/</link>
+        <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Stable-Diffusion</title>
+        <link>http://101.200.73.250:80/tags/stable-diffusion/</link>
+        <pubDate>Mon, 13 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/tags/stable-diffusion/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

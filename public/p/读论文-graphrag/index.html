@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="首个将图引入RAG的架构">
+<title>[读论文] GraphRAG</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/%E8%AF%BB%E8%AE%BA%E6%96%87-graphrag/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="[读论文] GraphRAG">
+<meta property='og:description' content="首个将图引入RAG的架构">
+<meta property='og:url' content='http://101.200.73.250:80/p/%E8%AF%BB%E8%AE%BA%E6%96%87-graphrag/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='RAG' /><meta property='article:tag' content='LLM' /><meta property='article:published_time' content='2024-12-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-12-16T00:00:00&#43;00:00'/><meta property='og:image' content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218162305869.png' />
+<meta name="twitter:title" content="[读论文] GraphRAG">
+<meta name="twitter:description" content="首个将图引入RAG的架构"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218162305869.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5c83ce115cee591a70a1d036fffd59cb_113467_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halitum'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://scholar.google.com/citations?hl=zh-CN&amp;user=0UXNJG0AAAAJ'
+                        target="_blank"
+                        title="Google Scolar"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="icon icon-tabler icon-tabler-google-scholar" 
+  width="24" 
+  height="24" 
+  viewBox="-1.2 -1.2 24 24" 
+  stroke-width="2" 
+  stroke="currentColor" 
+  fill="none" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+>
+  <path stroke="none" d="M0 0h512v512H0z" fill="none"/>
+  <path d="M16.49109375 12.59296875s0 0.00421875 0.00421875 0.00421875c0.388125 0.8184375 0.6075 1.7339062500000002 0.6075 2.7C17.098593750000003 18.777656250000003 14.28046875 21.6 10.8 21.6s-6.298593750000001 -2.8223437500000004 -6.298593750000001 -6.298593750000001c0 -0.96609375 0.21937500000000001 -1.8815625000000002 0.6075 -2.7 0.07171875 -0.151875 0.151875 -0.30375 0.23625 -0.45140625 0.18562500000000004 -0.320625 0.39656250000000004 -0.62015625 0.6328125 -0.8985937500000001 1.1559375 -1.3753125000000002 2.8898437500000003 -2.24859375 4.826250000000001 -2.24859375 1.4175000000000002 0 2.7253125 0.46828125000000004 3.78 1.26140625 0.38390625 0.29109375000000004 0.7340625 0.62015625 1.0462500000000001 0.99140625 0.23625 0.2784375 0.4471875 0.5821875000000001 0.6328125 0.8985937500000001 0.084375 0.1434375 0.1603125 0.29531250000000003 0.23203125000000002 0.44296875zm1.11375 -0.7931250000000001c-1.2698437500000002 -2.46375 -3.8390625000000003 -4.15125 -6.804843750000001 -4.15125s-5.535 1.6875 -6.804843750000001 4.15125L0 8.55140625 10.8 0l10.8 8.55140625 -3.9951562500000004 3.25265625z">
+  </path>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:halitum0216@gmail.com'
+                        target="_blank"
+                        title="Mail"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com/Halit_beaver'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#highlight">Highlight</a></li>
+    <li><a href="#approach--pipeline">Approach &amp; Pipeline</a>
+      <ol>
+        <li><a href="#source-documents-text-chunks">Source Documents →Text Chunks</a></li>
+        <li><a href="#text-chunkselement-instances">Text Chunks→Element Instances</a></li>
+        <li><a href="#element-instances--element-summaries">Element Instances → Element Summaries</a></li>
+        <li><a href="#element-summaries--graph-communities">Element Summaries → Graph Communities</a></li>
+        <li><a href="#graph-communitiescommunity-summaries">Graph Communities→Community Summaries</a></li>
+        <li><a href="#community-summariescommunity-answersglobal-answer">Community Summaries→Community Answers→Global Answer</a></li>
+      </ol>
+    </li>
+    <li><a href="#evaluation">Evaluation</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E8%AF%BB%E8%AE%BA%E6%96%87-graphrag/">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218162305869.png" loading="lazy" alt="Featured image of post [读论文] GraphRAG" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF/" style="background-color: #2a9d8f; color: #fff;">
+                大模型技术
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E8%AF%BB%E8%AE%BA%E6%96%87-graphrag/">[读论文] GraphRAG</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            首个将图引入RAG的架构
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 16, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p>“在大部分指标上存在特定社区层次结果优于baseline，存在缺点1. 不能根据 Query 的期望的潜在搜索广度/深度动态适应不同层次的社区摘要进行回答，2. 耗费太高，3. 知识库难以实现增删改查。官网的项目配图很好看，评价为未来可期”</p>
+</blockquote>
+<p><em>原文地址：<a class="link" href="https://arxiv.org/pdf/2404.16130"  target="_blank" rel="noopener"
+    >From Local to Global: A Graph RAG Approach to Query-Focused Summarization</a></em></p>
+<h2 id="highlight">Highlight
+</h2><p>通过两个阶段（索引和查询）构建基于图的文本索引</p>
+<ol>
+<li>先从源文档构建实体知识图，然后为密切相关的实体组预生成社区（community）摘要</li>
+<li>对于Query，将每个社区摘要作为生成的部分响应（partial response），在最终响应（final response）中总结所有部分响应</li>
+</ol>
+<h2 id="approach--pipeline">Approach &amp; Pipeline
+</h2><p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218172716864.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20241218172716864"
+	
+	
+></p>
+<ul>
+<li>
+<h3 id="source-documents-text-chunks">Source Documents →Text Chunks
+</h3><p>每个文本块被 LLM prompts 提取出图索引中的元素。值得注意的是，chunk越大，LLM调用就越少，但相应会导致召回率下降</p>
+<blockquote>
+<p><strong>召回率（Recall）</strong> 是信息检索中的指标，用于衡量被检索系统正确识别的重要信息占全部重要信息的比例。公式为：
+$$
+\text{召回率} = \frac{\text{正确检索出的重要信息数量}}{\text{全部重要信息数量}}
+$$</p>
+</blockquote>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218174112881.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20241218174112881"
+	
+	
+></p>
+<p>随着 chunk size 上升，提取到的实体数目随之下降。解决方法是引入下文的“多轮收集”机制</p>
+</li>
+<li>
+<h3 id="text-chunkselement-instances">Text Chunks→Element Instances
+</h3><p>Element 指的是节点、边、或声明（声明就是节点或边的附加信息）</p>
+<p>这一步是从每个源文本块中识别和提取图节点（实体）和边（关系），使用多部分 LLM prompts （主要是 few-shot examples 方法）来完成此操作。提取出的 实体 和 关系 使用元组来表示。该元组属于一个 <strong>实例组</strong></p>
+<blockquote>
+<p>例如：
+（实体1，关系1，实体2）、（实体2，关系2，实体3）</p>
+</blockquote>
+<p>prompts 的具体要求是，首先识别文本中的所有实体，包括它们的名称、类型和描述，然后识别明确相关实体之间的所有关系，包括源和目标实体，以及它们之间关系的<u>描述</u>（作为声明）</p>
+<p>这一步使用多轮“收集”，直到指定的最大值，允许我们使用更大的 chunk size，而不会降低质量</p>
+</li>
+<li>
+<h3 id="element-instances--element-summaries">Element Instances → Element Summaries
+</h3><p>这一步的目的是从元素中提取出抽象摘要的描述。具体操作为，在匹配的实例组上进行进一步的LLM总结
+一个潜在的问题：同一实体会被提取出多种不同表示的元素实例。解决方法是在之后的步骤中将语义相近的实例组划分到一个社区中</p>
+</li>
+<li>
+<h3 id="element-summaries--graph-communities">Element Summaries → Graph Communities
+</h3><p>使用聚类算法将语义相近的元素实例合并为一个社区（社区中的节点比其他节点具有更强的连接）</p>
+<blockquote>
+<p>具体来说，graphRAG中使用了 Leiden <strong>社区检测</strong>（Community Detection）的图论算法</p>
+<p>这种算法可以构建出 <strong>分层的社区结构</strong>——社区不仅仅是独立的群体，而是具有层级关系的群体结构</p>
+<p><strong>Leiden算法中的分层社区结构</strong></p>
+<p>它通过 <strong>分层合并</strong> （coarsing）过程，首先将图分成较大、较粗的社区，然后逐步细化这些社区，最终得到多个层级的社区划分。</p>
+<ul>
+<li><strong>第一层</strong>：图的最顶层会将节点分为较大的社区。</li>
+<li><strong>第二层及以后</strong>：每个较大的社区会进一步细化为子社区，直到达到较小的细分。</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<h3 id="graph-communitiescommunity-summaries">Graph Communities→Community Summaries
+</h3><p>这一步的目的是为 Leiden 层次结构中的每个社区创建类似报告的摘要，这些报告为每个子主题提供了更多细节。</p>
+<p>社区摘要生成方式：</p>
+<ul>
+<li>叶级社区：为每个元素摘要进行排序（按总体突出度降序），为其进行报告生成</li>
+<li>更高级的社区：如果所有子社区的元素摘要可以适配 LLM 上下文窗口大小，则直接生成报告。否则将长元素摘要替换成同社区内的短元素摘要</li>
+</ul>
+</li>
+<li>
+<h3 id="community-summariescommunity-answersglobal-answer">Community Summaries→Community Answers→Global Answer
+</h3><p>给定一个用户查询，可以使用前一步生成的社区摘要在多阶段过程中生成最终答案</p>
+<p>对于给定的社区级别，答案生成流程为：</p>
+<ol>
+<li>打乱社区摘要，然后分成多个预定大小的块（大小由<strong>token数量限制</strong>决定）</li>
+<li>对每个摘要块并行生成 Community Answers，然后用 LLM 对生成的答案打分（0-100），过滤掉0分答案</li>
+<li>将 Community Answers 按得分从高到低排序，选出几个帮助度最高的答案，添加到上下文窗口直到达到token限制。最终生成的全局答案会被返回给用户</li>
+</ol>
+</li>
+</ul>
+<h2 id="evaluation">Evaluation
+</h2><blockquote>
+<p>• CO. Uses root-level community summaries (fewest in number) to answer user queries.
+• C1. Uses high-level community summaries to answer queries. These are sub-communities
+of C0, if present, otherwise C0 communities projected down.
+• C2. Uses intermediate-level community summaries to answer queries. These are sub-
+communities of C1, if present, otherwise C1 communities projected down.
+• C3. Uses low-level community summaries (greatest in number) to answer queries. These
+are sub-communities of C2, if present, otherwise C2 communities projected down.
+• TS. The same method as in subsection 2.6, except source texts (rather than community
+summaries) are shuffled and chunked for the map-reduce summarization stages.
+• SS. An implementation of na¨ıve RAG in which text chunks are retrieved and added to the
+available context window until the specified token limit is reached.</p>
+</blockquote>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218190402441.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20241218190402441"
+	
+	
+></p>
+<blockquote>
+<p>“消耗了巨量 token 但未指定社区层级的生成效果却很一般？”</p>
+</blockquote>
+<p>结果表明在不同的任务上，不同层次社区的生成结果在某方面的表现与其他层次社区存在差异。值得注意的是，所有图方法的 Directness 指标都劣于 baseline</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/rag/">RAG</a>
+        
+            <a href="/tags/llm/">LLM</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/%E8%AF%BB%E8%AE%BA%E6%96%87-%E6%90%9C%E7%B4%A2-rag-%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218215911487.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218215911487.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[读论文] 搜索 RAG 的最佳实践</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E8%AF%BB%E8%AE%BA%E6%96%87-lightrag/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218104735239.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218104735239.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[读论文] LightRAG</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/transformer-part-1-attention-%E5%B0%8F%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Transformer part 1] Attention 小记</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
+

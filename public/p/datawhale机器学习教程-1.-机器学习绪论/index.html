@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="概览西瓜书+南瓜书第1、2章">
+<title>[Datawhale机器学习教程] 1. 机器学习绪论</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-1.-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BB%AA%E8%AE%BA/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="[Datawhale机器学习教程] 1. 机器学习绪论">
+<meta property='og:description' content="概览西瓜书+南瓜书第1、2章">
+<meta property='og:url' content='http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-1.-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BB%AA%E8%AE%BA/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='机器学习' /><meta property='article:published_time' content='2024-09-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-09-18T00:00:00&#43;00:00'/><meta property='og:image' content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png' />
+<meta name="twitter:title" content="[Datawhale机器学习教程] 1. 机器学习绪论">
+<meta name="twitter:description" content="概览西瓜书+南瓜书第1、2章"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5c83ce115cee591a70a1d036fffd59cb_113467_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halitum'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://scholar.google.com/citations?hl=zh-CN&amp;user=0UXNJG0AAAAJ'
+                        target="_blank"
+                        title="Google Scolar"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="icon icon-tabler icon-tabler-google-scholar" 
+  width="24" 
+  height="24" 
+  viewBox="-1.2 -1.2 24 24" 
+  stroke-width="2" 
+  stroke="currentColor" 
+  fill="none" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+>
+  <path stroke="none" d="M0 0h512v512H0z" fill="none"/>
+  <path d="M16.49109375 12.59296875s0 0.00421875 0.00421875 0.00421875c0.388125 0.8184375 0.6075 1.7339062500000002 0.6075 2.7C17.098593750000003 18.777656250000003 14.28046875 21.6 10.8 21.6s-6.298593750000001 -2.8223437500000004 -6.298593750000001 -6.298593750000001c0 -0.96609375 0.21937500000000001 -1.8815625000000002 0.6075 -2.7 0.07171875 -0.151875 0.151875 -0.30375 0.23625 -0.45140625 0.18562500000000004 -0.320625 0.39656250000000004 -0.62015625 0.6328125 -0.8985937500000001 1.1559375 -1.3753125000000002 2.8898437500000003 -2.24859375 4.826250000000001 -2.24859375 1.4175000000000002 0 2.7253125 0.46828125000000004 3.78 1.26140625 0.38390625 0.29109375000000004 0.7340625 0.62015625 1.0462500000000001 0.99140625 0.23625 0.2784375 0.4471875 0.5821875000000001 0.6328125 0.8985937500000001 0.084375 0.1434375 0.1603125 0.29531250000000003 0.23203125000000002 0.44296875zm1.11375 -0.7931250000000001c-1.2698437500000002 -2.46375 -3.8390625000000003 -4.15125 -6.804843750000001 -4.15125s-5.535 1.6875 -6.804843750000001 4.15125L0 8.55140625 10.8 0l10.8 8.55140625 -3.9951562500000004 3.25265625z">
+  </path>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:halitum0216@gmail.com'
+                        target="_blank"
+                        title="Mail"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com/Halit_beaver'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#-什么是假设空间"># 什么是假设空间？</a></li>
+    <li><a href="#-什么是归纳偏好inductive-bias"># 什么是归纳偏好(Inductive Bias)？</a></li>
+    <li><a href="#-没有免费的午餐定理-nfl-定理"># “<strong>没有免费的午餐</strong>”定理（ <strong>NFL</strong> 定理）</a></li>
+    <li><a href="#-机器学习应用领域"># 机器学习应用领域</a></li>
+    <li><a href="#-模型评估与选择"># 模型评估与选择</a>
+      <ol>
+        <li><a href="#评估方法">#评估方法</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-1.-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BB%AA%E8%AE%BA/">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" loading="lazy" alt="Featured image of post [Datawhale机器学习教程] 1. 机器学习绪论" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/datawhale%E7%BB%84%E9%98%9F%E5%AD%A6%E4%B9%A0/" style="background-color: #2a9d8f; color: #fff;">
+                DataWhale组队学习
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-1.-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BB%AA%E8%AE%BA/">[Datawhale机器学习教程] 1. 机器学习绪论</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            概览西瓜书&#43;南瓜书第1、2章
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 18, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p><em>一些基本概念</em></p>
+<ul>
+<li>机器学习：研究关于“学习算法”的学科</li>
+<li>模型：从数据中学习得到的结果</li>
+<li>特征向量/示例：数据集中的每条记录</li>
+<li>特征(feature)/属性(attribute)：反应事件或对象在模仿门面的表现或性质的事项（属性的取值即为属性值，张成的空间为属性空间/样本空间）</li>
+</ul>
+</blockquote>
+<h2 id="-什么是假设空间"># 什么是假设空间？
+</h2><p>假设空间是机器学习中用于描述所有<strong>可能假设</strong>的集合，我们试图在这个假设空间中寻找一个或多个与训练数据一致的假设，以便能够对未知数据进行准确的预测。</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919002408070.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240919002408070"
+	
+	
+></p>
+<p>假设空间中与训练集一致的“假设集合”，称为**“版本空间”**。版本空间表示了在现有数据下，所有可能正确的模型集合。<em>学习的目标是缩小版本空间，理想情况下找到唯一的假设。</em></p>
+<h2 id="-什么是归纳偏好inductive-bias"># 什么是归纳偏好(Inductive Bias)？
+</h2><p>归纳偏好是学习过程中，对某种类型的假设所表现出的倾向，决定了机器学习算法选择哪个假设来构建模型（在训练数据不足以唯一确定模型时，归纳偏好帮助算法选择一个看起来最“正确”的假设。）</p>
+<p>归纳偏好让算法在等效的假设中做出决策，选择出一个最适合的假设。所谓最适合的假设，就是最符合我们设定的原则的假设</p>
+<blockquote>
+<p>常见的<strong>归纳偏好原则</strong></p>
+<ul>
+<li>奥卡姆剃刀原则：若有多个假设与观察一致，则选最简单的那个</li>
+<li>平滑性假设：认为相似的输入应有相似的输出</li>
+<li>最大似然原则：选择使观测数据概率最大的假设</li>
+</ul>
+</blockquote>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919003325192.png" alt="image-20240919003325192" style="zoom:50%;" />
+<p>在这个例子中，如果A、B曲线都是符合观察的版本空间，那么如果遵循奥卡姆剃刀原则作为归纳偏好原则，那我们最终将决定使用曲线A的假设空间来构建模型</p>
+<h2 id="-没有免费的午餐定理-nfl-定理"># “<strong>没有免费的午餐</strong>”定理（ <strong>NFL</strong> 定理）
+</h2><p>内容：当所有“问题”出现的机会相同、或所有问题同等重要时，对于任意两个学习算法而言，他们的期望性能都相同。（但是，所有问题的先验概率是均匀的，这在现实中并不成立。而正相反，数据会具有特定的分布，算法可以利用这些分布特性取得更好的性能）</p>
+<p>结论：谈论算法的相对优劣，必须要针对具体的学习问题</p>
+<h2 id="-机器学习应用领域"># 机器学习应用领域
+</h2><ul>
+<li><strong>图像识别</strong>：用于人脸识别、手写数字识别、自动驾驶中的物体检测等。</li>
+<li><strong>自然语言处理</strong>：包括机器翻译、情感分析、文本分类、语音识别和生成等。</li>
+<li><strong>推荐系统</strong>：在电商平台推荐商品，在音乐和视频平台推荐内容，提高用户体验。</li>
+<li><strong>金融预测</strong>：用于股票价格预测、信用评分、欺诈检测和风险管理。</li>
+</ul>
+<h2 id="-模型评估与选择"># 模型评估与选择
+</h2><p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E6%AC%A0%E6%8B%9F%E5%90%88%E5%92%8C%E8%BF%87%E6%8B%9F%E5%90%88png.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>（欠拟合-高偏差 、正常拟合 、过拟合-高方差）</p>
+<p>欠拟合比较容易解决，增大神经网络学习轮数/扩展决策树分支即可，过拟合则难以克服。实际上，过拟合是无法彻底避免的，而只能被缓解</p>
+<h3 id="评估方法">#评估方法
+</h3><p>使用模型在“测试数据”上的误差（测试误差(testing error)）来近似作为模型泛化能力的误差</p>
+<blockquote>
+<p>从一整个数据集中划分测试集与训练集的方法：</p>
+<ul>
+<li>留出法：直接将数据集D 划分为两个互斥的集合。（为避免单次留出得到的估计结果不稳定可靠，往往要进行p次随机划分，最终的评估结果是这p次训练-测试结果的均值）
+<ul>
+<li>交叉验证法：将数据集划分为K个大小相似的互斥子集（k折交叉验证）——1折验证，k-1折训练，轮替进行，最终的评估结果是这p次k折交叉验证结果的均值（一共进行了p*k次训练-测试）</li>
+</ul>
+</li>
+<li>自助法（有放回采样）：从数据集中pick m次（样本可能被重复pick），将pick到的数据m个数据作为训练集，原数据集种未被pick到的样本点作为测试集。可以避免训练样本规模不同而导致的估计偏差，数据集较小、难以有效划分训练／测试集时很有用。自助法的缺点是，产生的数据集会改变初始数据集的分布</li>
+</ul>
+</blockquote>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%92%E5%88%86_%E5%8E%BB%E9%99%A4%E8%83%8C%E6%99%AF.png" alt="数据集划分_去除背景" style="zoom:67%;" />
+<p><strong>性能度量</strong></p>
+<ul>
+<li>
+<p>准确率（precision）度量的是被预测为正例的样本中有多少是真正的正例</p>
+</li>
+<li>
+<p>精确率（Precision）预测为正类的样本中，实际为正类的比例</p>
+</li>
+<li>
+<p>召回率（recall）度量的是正类样本中有多少被预测为正类</p>
+</li>
+</ul>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240322170518905.png" alt="image-20240322170518905" style="zoom: 33%;" />
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240921230119206.png" alt="image-20240921230119206" style="zoom:50%;" />
+<p><strong>ROC曲线（Receiver Operating Characteristic curve）</strong></p>
+<p>内容是真正类率（True Positive Rate, TPR）（就是指召回率）和假正类率（False Positive Rate, FPR）之间的关系</p>
+<blockquote>
+<p>假正类率（FPR）</p>
+<p>模型错误地将负类识别为正类的比例 FPR = FP / (FP + TN)</p>
+</blockquote>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/roc.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="roc"
+	
+	
+></p>
+<p>ROC曲线面积（AUC值）越大模型的性能越好</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-3.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Datawhale机器学习教程] 3. 线性模型-对数几率回归</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-2.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Datawhale机器学习教程] 2. 线性模型-线性回归</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
+

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Stable-Diffusion on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/tags/stable-diffusion/</link>
+        <description>Recent content in Stable-Diffusion on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Mon, 13 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/tags/stable-diffusion/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Stable Diffusion笔记</title>
+        <link>http://101.200.73.250:80/p/stable-diffusion%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Mon, 13 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/stable-diffusion%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231021232359208.png" alt="Featured image of post Stable Diffusion笔记" /&gt;&lt;h1 id=&#34;小模型微调用法&#34;&gt;小模型微调用法
+&lt;/h1&gt;&lt;h2 id=&#34;1embeddings文本嵌入&#34;&gt;1.Embeddings（文本嵌入）
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;c站中为Textual Inversion&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;文件后缀：.pt&lt;/p&gt;
+&lt;h3 id=&#34;使用方法&#34;&gt;使用方法
+&lt;/h3&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231021230308244.png&#34; alt=&#34;image-20231021230308244&#34; style=&#34;zoom: 33%;&#34; /&gt;
+&lt;p&gt;在webUI文生图中prompt栏直接输入&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;常需降低权重（0.9~0.95），控制相关性（11以下）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;2lora低秩适应模型&#34;&gt;2.LoRa（低秩适应模型）
+&lt;/h2&gt;&lt;p&gt;文件后缀：.checkpoint或.safetensors（与大模型一致）&lt;/p&gt;
+&lt;h3 id=&#34;使用方法-1&#34;&gt;使用方法
+&lt;/h3&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231021230934425.png&#34; alt=&#34;image-20231021230934425&#34; style=&#34;zoom:33%;&#34; /&gt;
+&lt;h3 id=&#34;1在webui文生图中prompt栏输入&#34;&gt;（1.）在webUI文生图中prompt栏输入
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;&amp;lt;lora:[lora名]:[权重值]&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;有些lora还包含触发提示词，可加入prompt中提升使用效果&lt;/p&gt;
+&lt;p&gt;权重值：0.5~0.8&lt;/p&gt;
+&lt;p&gt;（过高影响画风表现）&lt;/p&gt;
+&lt;h3 id=&#34;2在额外附加选项栏中添加&#34;&gt;(2.)在额外附加选项栏中添加
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231021232359208.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20231021232359208&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;改选单可设置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231021232602035.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20231021232602035&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;3additionnalnetwork&#34;&gt;（3.)AdditionnalNetwork
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231021232745042.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20231021232745042&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;3hyperwork超网络&#34;&gt;3.Hyperwork（超网络）
+&lt;/h2&gt;&lt;p&gt;文件后缀：.pt&lt;/p&gt;
+&lt;h3 id=&#34;使用方法-2&#34;&gt;使用方法
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231021231550462.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20231021231550462&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;在设置中添加附加网络&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231021231727623.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20231021231727623&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;清晰度提升&#34;&gt;清晰度提升
+&lt;/h1&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231113225657517.png&#34; alt=&#34;image-20231113225657517&#34; style=&#34;zoom:200%;&#34; /&gt;
+&lt;h2 id=&#34;1高清修复&#34;&gt;1.高清修复
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;无法突破现存限制&lt;/p&gt;
+&lt;p&gt;可解决提高分辨率后的多人多头问题&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;清晰度设置&#34;&gt;清晰度设置：
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;放大清晰度：0.3~0.5&lt;/li&gt;
+&lt;li&gt;增加细节：0.5~0.7&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;放大算法&#34;&gt;放大算法
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;使用R-ESRGAN 4x+&lt;/p&gt;
+&lt;p&gt;(二次元使用Anime6B)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;优先使用模型推荐算法&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2sd放大&#34;&gt;2.SD放大
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;可突破现存限制&lt;/p&gt;
+&lt;p&gt;分割充会相对不可控&lt;/p&gt;
+&lt;p&gt;偶尔会出现额外元素&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在图生图中选择脚本：使用SD放大&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;像素重叠（拼接缓冲带）：调大解决画面割裂问题&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;最终宽高=（设置的宽高-重叠像素）*放大倍率&lt;/p&gt;
+&lt;p&gt;设置像素重叠后要在设置宽高基础上加上该值&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;放大算法使用R-ESRGAN 4x+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;若sd放大后画面割裂降低重绘幅度提高像素重叠&#34;&gt;若SD放大后画面割裂：降低重绘幅度、提高像素重叠
+&lt;/h3&gt;&lt;h2 id=&#34;3附加功能放大算法&#34;&gt;3.附加功能放大算法
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;重回幅度为零&lt;/p&gt;
+&lt;p&gt;画面提升效果较小&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;算法优先选择R-ESRGAN 4x+，其他维持默认&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;参数配置技巧&#34;&gt;参数配置技巧
+&lt;/h1&gt;&lt;h2 id=&#34;模型vae影像画面画风&#34;&gt;模型VAE：影像画面画风
+&lt;/h2&gt;&lt;h2 id=&#34;采样步数&#34;&gt;采样步数
+&lt;/h2&gt;&lt;p&gt;常用10~30（20步以上提升较小）&lt;/p&gt;
+&lt;h2 id=&#34;采样方法&#34;&gt;采样方法
+&lt;/h2&gt;&lt;p&gt;优先使用大模型推荐的&lt;/p&gt;
+&lt;p&gt;否则使用+Karras&lt;/p&gt;
+&lt;h2 id=&#34;其他选项&#34;&gt;其他选项
+&lt;/h2&gt;&lt;p&gt;面部修复（选）&lt;/p&gt;
+&lt;p&gt;平铺（不选）&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

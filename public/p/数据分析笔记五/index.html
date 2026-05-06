@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="5. 数据重构">
+<title>数据分析笔记（五）</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%BA%94/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="数据分析笔记（五）">
+<meta property='og:description' content="5. 数据重构">
+<meta property='og:url' content='http://101.200.73.250:80/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%BA%94/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='' /><meta property='article:published_time' content='2024-03-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-26T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="数据分析笔记（五）">
+<meta name="twitter:description" content="5. 数据重构">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5c83ce115cee591a70a1d036fffd59cb_113467_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halitum'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://scholar.google.com/citations?hl=zh-CN&amp;user=0UXNJG0AAAAJ'
+                        target="_blank"
+                        title="Google Scolar"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="icon icon-tabler icon-tabler-google-scholar" 
+  width="24" 
+  height="24" 
+  viewBox="-1.2 -1.2 24 24" 
+  stroke-width="2" 
+  stroke="currentColor" 
+  fill="none" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+>
+  <path stroke="none" d="M0 0h512v512H0z" fill="none"/>
+  <path d="M16.49109375 12.59296875s0 0.00421875 0.00421875 0.00421875c0.388125 0.8184375 0.6075 1.7339062500000002 0.6075 2.7C17.098593750000003 18.777656250000003 14.28046875 21.6 10.8 21.6s-6.298593750000001 -2.8223437500000004 -6.298593750000001 -6.298593750000001c0 -0.96609375 0.21937500000000001 -1.8815625000000002 0.6075 -2.7 0.07171875 -0.151875 0.151875 -0.30375 0.23625 -0.45140625 0.18562500000000004 -0.320625 0.39656250000000004 -0.62015625 0.6328125 -0.8985937500000001 1.1559375 -1.3753125000000002 2.8898437500000003 -2.24859375 4.826250000000001 -2.24859375 1.4175000000000002 0 2.7253125 0.46828125000000004 3.78 1.26140625 0.38390625 0.29109375000000004 0.7340625 0.62015625 1.0462500000000001 0.99140625 0.23625 0.2784375 0.4471875 0.5821875000000001 0.6328125 0.8985937500000001 0.084375 0.1434375 0.1603125 0.29531250000000003 0.23203125000000002 0.44296875zm1.11375 -0.7931250000000001c-1.2698437500000002 -2.46375 -3.8390625000000003 -4.15125 -6.804843750000001 -4.15125s-5.535 1.6875 -6.804843750000001 4.15125L0 8.55140625 10.8 0l10.8 8.55140625 -3.9951562500000004 3.25265625z">
+  </path>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:halitum0216@gmail.com'
+                        target="_blank"
+                        title="Mail"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com/Halit_beaver'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#表格拼接">表格拼接</a>
+      <ol>
+        <li><a href="#1-concat">1. concat()</a></li>
+        <li><a href="#2join">2.join()</a></li>
+        <li><a href="#3-append">3. append()</a></li>
+        <li><a href="#4-merge">4. merge()</a></li>
+      </ol>
+    </li>
+    <li><a href="#格式转换df--series">格式转换（df –&gt; series）</a>
+      <ol>
+        <li><a href="#1stack宽格式--长格式">1.stack()：宽格式 –&gt; 长格式</a></li>
+        <li><a href="#2unstack长格式--宽格式">2.unstack()：长格式 –&gt; 宽格式</a></li>
+      </ol>
+    </li>
+    <li><a href="#数据聚合与运算">数据聚合与运算</a>
+      <ol>
+        <li><a href="#groupby方法通过条件分组">Groupby方法——通过…(条件)分组</a></li>
+        <li><a href="#根据多个键进行分组">根据多个键进行分组</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="background-color: #2a9d8f; color: #fff;">
+                数据分析
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%BA%94/">数据分析笔记（五）</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            5. 数据重构
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 26, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p><strong>数据重构</strong>:数据从一种格式到另一种格式的转换，实现多源和异构数据的联接与融合</p>
+</blockquote>
+<h2 id="表格拼接">表格拼接
+</h2><h3 id="1-concat">1. concat()
+</h3><p>沿着一条轴（横向或纵向）合并表格或列（Series、DataFrame）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 将train-left-up.csv和train-right-up.csv横向合并为一张表</span>
+</span></span><span class="line"><span class="cl"><span class="n">list_up</span> <span class="o">=</span> <span class="p">[</span><span class="n">text_left_up</span><span class="p">,</span><span class="n">text_right_up</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">result_up</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">list_up</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 将train-left-down和train-right-down横向合并为一张表</span>
+</span></span><span class="line"><span class="cl"><span class="n">list_down</span><span class="o">=</span><span class="p">[</span><span class="n">text_left_down</span><span class="p">,</span><span class="n">text_right_down</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">result_down</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">list_down</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 将上边的result_up和result_down纵向合并为result</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">result_up</span><span class="p">,</span><span class="n">result_down</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>参数：</p>
+<ul>
+<li>objs: 要连接对象的序列或映射。</li>
+<li>axis:
+<ul>
+<li>默认为0：纵向合并（行合并）</li>
+<li>设为1：横向合并（列合并）</li>
+</ul>
+</li>
+<li>join:
+<ul>
+<li>&lsquo;inner&rsquo;表示内连接，只保留匹配的索引</li>
+<li>&lsquo;outer&rsquo;（默认）表示外连接，保留所有的索引。</li>
+</ul>
+</li>
+<li>ignore_index: 布尔值，默认为False。如果为True，则不使用索引值，而是创建一个新的范围索引。
+<ul>
+<li>主要在行合并且原索引不重要时使用</li>
+</ul>
+</li>
+<li>keys: 用于形成多级索引，指定结果中每个片段的标签。
+<ul>
+<li>有助于区分合并前的不同数据片段</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="2join">2.join()
+</h3><p>通过列合横向合并df（连接同一数据元素的不同属性信息）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">resul_up</span> <span class="o">=</span> <span class="n">text_left_up</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text_right_up</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">result_down</span> <span class="o">=</span> <span class="n">text_left_down</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text_right_down</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>参数：</p>
+<ul>
+<li>other：另一个<code>DataFrame</code>或多个<code>DataFrame</code>组成的列表，用于与调用<code>join()</code>方法的<code>DataFrame</code>进行合并。</li>
+<li>on：列名或列名列表，用于指示将这些列作为键进行连接。如果为<code>None</code>，默认使用索引进行连接。</li>
+<li>how：指定连接的方式。可以是<code>'left'</code>、<code>'right'</code>、<code>'outer'</code>、<code>'inner'</code>之一，默认为<code>'left'</code>。</li>
+<li>lsuffix 和 rsuffix：分别是左右<code>DataFrame</code>中列名冲突时要添加的后缀。如果在合并的两个<code>DataFrame</code>中存在相同名称的列（且未作为连接键），则可以通过这两个参数为左右<code>DataFrame</code>中的列分别添加后缀，以避免列名冲突。</li>
+<li>sort：布尔值，指示是否根据连接键对结果进行排序，默认为<code>False</code>。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>默认情况下，<code>join()</code>方法使用左连接（left join），意味着结果中将包含左<code>DataFrame</code>的所有行，即使在右<code>DataFrame</code>中没有匹配的索引也是如此。如果在右<code>DataFrame</code>中存在匹配的索引，则这些行将被合并到结果中。</p>
+</blockquote>
+<h3 id="3-append">3. append()
+</h3><p>通过行纵向合并df（将几行数据添加到现有df）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">result_up</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result_down</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>参数：</p>
+<ul>
+<li><code>other</code>: 另一个<code>DataFrame</code>或<code>Series</code>，或它们的列表。</li>
+<li><code>ignore_index</code>、<code>verify_integrity</code>、<code>sort</code>的含义与<code>concat()</code>中相同。</li>
+</ul>
+</blockquote>
+<h3 id="4-merge">4. merge()
+</h3><p>进阶版join()。通过一个或多个键横向合并列</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">result_up</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">text_left_up</span><span class="p">,</span><span class="n">text_right_up</span><span class="p">,</span><span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">result_down</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">text_left_down</span><span class="p">,</span><span class="n">text_right_down</span><span class="p">,</span><span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>参数：</p>
+<ul>
+<li><code>left</code>、<code>right</code>: 要合并的两个<code>DataFrame</code>。</li>
+<li><code>how</code>: 类型的合并，<code>'left'</code>、<code>'right'</code>、<code>'outer'</code>、<code>'inner'</code>。</li>
+<li><code>on</code>: 用于连接的列名。如果未指定，并且没有其他连接键，将使用两个<code>DataFrame</code>的列名的交集。</li>
+<li><code>left_on</code>、<code>right_on</code>: 分别从左右<code>DataFrame</code>中指定列作为连接键。</li>
+<li><code>left_index</code>、<code>right_index</code>: 如果为True，使用索引（行标签）作为其连接键。
+<ul>
+<li>仅在索引预先排好序的情况下可以使用</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="格式转换df--series">格式转换（df –&gt; series）
+</h2><h3 id="1stack宽格式--长格式">1.stack()：宽格式 –&gt; 长格式
+</h3><p>将df数据转置，即列“旋转”为行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">stacked</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240317013425787.png" alt="image-20240317013425787" style="zoom:50%;" />
+<h3 id="2unstack长格式--宽格式">2.unstack()：长格式 –&gt; 宽格式
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">unstacked</span> <span class="o">=</span> <span class="n">stacked</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>stack()的逆运算，将索引的某个级别“展开”到列上，返回一个df</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240318215400676.png" alt="image-20240318215400676" style="zoom: 50%;" /><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240318215517563.png" alt="image-20240318215517563" style="zoom: 50%;" /></p>
+<h2 id="数据聚合与运算">数据聚合与运算
+</h2><blockquote>
+<p>数据聚合（Aggregation）是指对数据集进行操作，返回一个比原始数据更小的数据集，以减少数据的量并提取有意义的信息</p>
+</blockquote>
+<h3 id="groupby方法通过条件分组">Groupby方法——通过…(条件)分组
+</h3><p>用于数据分组和分类计算</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">group</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;列名&#39;</span><span class="p">)</span> <span class="c1"># --&gt; 返回DataFrameGroupBy对象</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Groupby过程拆解：<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240317014008096.png" alt="Groupby过程拆解" style="zoom:67%;" /></p>
+<blockquote>
+<p>DataFrameGroup对象在使用上和TextFileReader类似，可通过迭代或get_group()方法转换成DataFrame</p>
+</blockquote>
+<h3 id="根据多个键进行分组">根据多个键进行分组
+</h3><p>这样可以获得具有层次化索引的df</p>
+<p><strong>层次化df：</strong></p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240318214001277.png" alt="image-20240318214001277" style="zoom:67%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">group</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;仓位等级&#39;</span><span class="p">,</span><span class="s1">&#39;性别&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">sex</span><span class="p">),</span> <span class="n">group_df</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;仓位等级: </span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">, 性别: </span><span class="si">{</span><span class="n">sex</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">group_df</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240318213557488.png" alt="image-20240318213557488" style="zoom:50%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="c1">#--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">dict_keys([(1, &#39;female&#39;), (1, &#39;male&#39;), (2, &#39;female&#39;), (2, &#39;male&#39;), (3, &#39;female&#39;), (3, &#39;male&#39;)])
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%B8%83/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（七）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E5%85%AD/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（六）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E5%9B%9B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（四）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%B8%89/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（三）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%BA%8C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（二）</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
+

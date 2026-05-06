@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>其他 on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/categories/%E5%85%B6%E4%BB%96/</link>
+        <description>Recent content in 其他 on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Tue, 30 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/categories/%E5%85%B6%E4%BB%96/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>建站纪念</title>
+        <link>http://101.200.73.250:80/p/%E5%BB%BA%E7%AB%99%E7%BA%AA%E5%BF%B5/</link>
+        <pubDate>Tue, 30 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/%E5%BB%BA%E7%AB%99%E7%BA%AA%E5%BF%B5/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240730200650721.png" alt="Featured image of post 建站纪念" /&gt;&lt;iframe frameborder=&#34;no&#34; border=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; width=330 height=86 src=&#34;//music.163.com/outchain/player?type=2&amp;id=730856&amp;auto=0&amp;height=66&#34;&gt;&lt;/iframe&gt;
+&lt;p&gt;从pelican、wordpress到现在的hugo，这是海狸使用的第三个博客框架&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

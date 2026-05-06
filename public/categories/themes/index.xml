@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Themes on Halit&#39; blog</title>
+        <link>http://localhost:1313/categories/themes/</link>
+        <description>Recent content in Themes on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Mon, 11 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/themes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Markdown Syntax Guide</title>
+        <link>http://localhost:1313/p/markdown-syntax-guide/</link>
+        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/markdown-syntax-guide/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240730200650721.png" alt="Featured image of post Markdown Syntax Guide" /&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Sections on 演示站点</title>
+        <link>http://localhost:1313/section/</link>
+        <description>Recent content in Sections on 演示站点</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Tue, 30 Jul 2024 15:54:17 +0800</lastBuildDate><atom:link href="http://localhost:1313/section/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>My First Post</title>
+        <link>http://localhost:1313/section/my-first-post/</link>
+        <pubDate>Tue, 30 Jul 2024 15:54:17 +0800</pubDate>
+        
+        <guid>http://localhost:1313/section/my-first-post/</guid>
+        <description>&lt;h1 id=&#34;test&#34;&gt;test
+&lt;/h1&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="详读西瓜书+南瓜书第三章——线性回归">
+<title>[Datawhale机器学习教程] 2. 线性模型-线性回归</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-2.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="[Datawhale机器学习教程] 2. 线性模型-线性回归">
+<meta property='og:description' content="详读西瓜书+南瓜书第三章——线性回归">
+<meta property='og:url' content='http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-2.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='机器学习' /><meta property='article:published_time' content='2024-09-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-09-21T00:00:00&#43;00:00'/><meta property='og:image' content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png' />
+<meta name="twitter:title" content="[Datawhale机器学习教程] 2. 线性模型-线性回归">
+<meta name="twitter:description" content="详读西瓜书+南瓜书第三章——线性回归"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5c83ce115cee591a70a1d036fffd59cb_113467_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halitum'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://scholar.google.com/citations?hl=zh-CN&amp;user=0UXNJG0AAAAJ'
+                        target="_blank"
+                        title="Google Scolar"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="icon icon-tabler icon-tabler-google-scholar" 
+  width="24" 
+  height="24" 
+  viewBox="-1.2 -1.2 24 24" 
+  stroke-width="2" 
+  stroke="currentColor" 
+  fill="none" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+>
+  <path stroke="none" d="M0 0h512v512H0z" fill="none"/>
+  <path d="M16.49109375 12.59296875s0 0.00421875 0.00421875 0.00421875c0.388125 0.8184375 0.6075 1.7339062500000002 0.6075 2.7C17.098593750000003 18.777656250000003 14.28046875 21.6 10.8 21.6s-6.298593750000001 -2.8223437500000004 -6.298593750000001 -6.298593750000001c0 -0.96609375 0.21937500000000001 -1.8815625000000002 0.6075 -2.7 0.07171875 -0.151875 0.151875 -0.30375 0.23625 -0.45140625 0.18562500000000004 -0.320625 0.39656250000000004 -0.62015625 0.6328125 -0.8985937500000001 1.1559375 -1.3753125000000002 2.8898437500000003 -2.24859375 4.826250000000001 -2.24859375 1.4175000000000002 0 2.7253125 0.46828125000000004 3.78 1.26140625 0.38390625 0.29109375000000004 0.7340625 0.62015625 1.0462500000000001 0.99140625 0.23625 0.2784375 0.4471875 0.5821875000000001 0.6328125 0.8985937500000001 0.084375 0.1434375 0.1603125 0.29531250000000003 0.23203125000000002 0.44296875zm1.11375 -0.7931250000000001c-1.2698437500000002 -2.46375 -3.8390625000000003 -4.15125 -6.804843750000001 -4.15125s-5.535 1.6875 -6.804843750000001 4.15125L0 8.55140625 10.8 0l10.8 8.55140625 -3.9951562500000004 3.25265625z">
+  </path>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:halitum0216@gmail.com'
+                        target="_blank"
+                        title="Mail"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com/Halit_beaver'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#-一元线性回归损失函数推导方法"># 一元线性回归损失函数推导方法</a>
+      <ol>
+        <li><a href="#最小二乘法">最小二乘法</a></li>
+        <li><a href="#极大似然估计">极大似然估计</a></li>
+      </ol>
+    </li>
+    <li><a href="#如何求的-w-和-b-">#如何求的 $w$ 和 $b$ ？</a></li>
+    <li><a href="#-表达式向量化"># 表达式向量化</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-2.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" loading="lazy" alt="Featured image of post [Datawhale机器学习教程] 2. 线性模型-线性回归" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/datawhale%E7%BB%84%E9%98%9F%E5%AD%A6%E4%B9%A0/" style="background-color: #2a9d8f; color: #fff;">
+                DataWhale组队学习
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-2.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">[Datawhale机器学习教程] 2. 线性模型-线性回归</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            详读西瓜书&#43;南瓜书第三章——线性回归
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 21, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><strong>线性模型基本形式</strong>
+$$
+f(x) = w^T x + b
+$$</p>
+<p>其中，$w = (w_1; w_2; \dots; w_d)$。$w$ 和 $b$ 学得之后，模型就得以确定。</p>
+<p>线性模型形式简单易于建模，且有很好的可解释性(comprehensibility)</p>
+<h1 id="线性回归">线性回归
+</h1><h2 id="-一元线性回归损失函数推导方法"># 一元线性回归损失函数推导方法
+</h2><h3 id="最小二乘法">最小二乘法
+</h3><p>基于均方误差最小化来进行模型求解的方法称为“最小二乘法”(least square method)</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240921231922658.png" alt="image-20240921231922658" style="zoom: 67%;" />
+$$
+(w^*, b^*) = \arg\min_{(w,b)} \sum_{i=1}^{m} \left( f(x_i) - y_i \right)^2
+$$
+<p>$$
+= \arg\min_{(w,b)} \sum_{i=1}^{m} \left( y_i - w x_i - b \right)^2
+$$</p>
+<blockquote>
+<p>扩展：如何将离散特征添加到模型中——</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240921233349910.png" alt="image-20240921233349910" style="zoom:50%;" />
+</blockquote>
+<h3 id="极大似然估计">极大似然估计
+</h3><p>将线性回归模型表述为如下形式：
+$$
+y = wx + b + \epsilon
+$$
+其中 $y$ 是预测值， $wx$ 是真实值。 $\epsilon$ 是误差，且符合正态分布</p>
+<p>+++</p>
+<p>$\epsilon$ 的概率密度
+$$
+p(\epsilon) = \frac{1}{\sqrt{2\pi\sigma}} \exp\left( -\frac{\epsilon^2}{2\sigma^2} \right)
+$$</p>
+<p>将 $\epsilon = y - (wx + b)$ 带入，得到 $y$ 的概率密度函数</p>
+<p>$$
+p(y) = \frac{1}{\sqrt{2\pi\sigma}} \exp\left( -\frac{(y - (wx + b))^2}{2\sigma^2} \right)
+$$
+使用极大似然估计来估计得到 $w$ 和 $b$ 的值
+$$
+\ln L(w, b) = m \ln \frac{1}{\sqrt{2\pi\sigma}} - \frac{1}{2\sigma^2} \sum_{i=1}^{m} (y_i - wx_i - b)^2
+$$
+也即
+$$
+(w^<em>, b^</em>) = \arg\min_{(w, b)} \sum_{i=1}^{m} (y_i - wx_i - b)^2
+$$</p>
+<p>+++</p>
+<p>该结论与最小二乘法<strong>得出的结论相同</strong>——均方误差最小化可达到线性回归</p>
+<h2 id="如何求的-w-和-b-">#如何求的 $w$ 和 $b$ ？
+</h2><p>可以通过 <code>凸函数的判定定理</code></p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240922003325964.png" alt="image-20240922003325964" style="zoom:50%;" />
+<p>证得线性回归损失函数是关于 $w$ 和 $b$ 的凸函数，则问题化简成求凸函数最值</p>
+<p>由凸函数性质（凸充分定理）可知，损失函数梯度为0的点（即各个偏导数为0的点）即为损失函数的极小值点，这也是损失函数取得最小值的充分条件</p>
+<p>带入偏导数为0，求得表达式：
+$$
+w = \frac{\sum_{i=1}^{m} y_i (x_i - \bar{x})}{\sum_{i=1}^{m} x_i^2 - \frac{1}{m} \left( \sum_{i=1}^{m} x_i \right)^2}
+$$</p>
+<p>$$
+b = \frac{1}{m} \sum_{i=1}^{m} (y_i - wx_i)
+$$</p>
+<h2 id="-表达式向量化"># 表达式向量化
+</h2><p>on going</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-3.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Datawhale机器学习教程] 3. 线性模型-对数几率回归</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-1.-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BB%AA%E8%AE%BA/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Datawhale机器学习教程] 1. 机器学习绪论</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
+

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>WSL on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/tags/wsl/</link>
+        <description>Recent content in WSL on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Fri, 19 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/tags/wsl/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>开始使用WSL</title>
+        <link>http://101.200.73.250:80/p/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8wsl/</link>
+        <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8wsl/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240730204447816.png" alt="Featured image of post 开始使用WSL" /&gt;&lt;h3 id=&#34;安装wsl并配置conda&#34;&gt;安装WSL并配置conda
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在Windows中安装WSL：以管理员身份运行cmd&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wsl --install -d Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#更新wsl：wsl --update&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;之后可通过开始菜单快捷方式或pwershell/cmd输入wsl进入WSL&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;注册账号密码&lt;/p&gt;
+&lt;p&gt;账号默认只能使用小写字母；输入密码时默认不可见（并非无法输入）&lt;/p&gt;
+&lt;p&gt;进入后默认以user身份登录，初始目录~为home&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;下载并安装miniconda&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;文件会被存放在你当前的工作目录中&lt;/p&gt;
+&lt;p&gt;为安装包添加执行权限（否则报Permission denied）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod +x Miniconda3-latest-Linux-x86_64.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./Miniconda3-latest-Linux-x86_64.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;按照屏幕上的提示进行安装。通常会问你是否同意许可条款，以及安装位置（可以接受默认设置）。&lt;/p&gt;
+&lt;p&gt;默认安装路径：~/miniconda3&lt;/p&gt;
+&lt;p&gt;最后一步询问是否在shell 启动时自动初始化 Conda输入yes
+&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240719103309854.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240719103309854&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;重载shell（bash）配置文件（否则无法使用conda命令）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.bashrc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;全局conda换源&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda config --add default_channels https://conda.virtaicloud.com/repository/anaconda/main
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda config --add default_channels https://conda.virtaicloud.com/repository/anaconda/r
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda config --add default_channels https://conda.virtaicloud.com/repository/anaconda/msys2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;conda配置完成&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;扩展内容：登录root用户并使用其他用户安装的conda&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo su
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;PATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/home/azureuser/miniconda3/bin:&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$PATH&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; /home/azureuser/miniconda3/etc/profile.d/conda.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;开始使用apt&#34;&gt;开始使用apt
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;更新软件包列表&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt update
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装所需软件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install tree
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;在windows和wsl之间传输文件&#34;&gt;在Windows和WSL之间传输文件
+&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;wsl2通过虚拟硬盘文件（VHDX）管理文件，占用C盘空间，向wsl传输大容量文件时要注意C盘爆红问题
+虚拟硬盘文件的大小会根据存储的数据自动增长，但不会自动缩小。如果你删除了大量数据，可能需要手动收缩 VHDX 文件&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;使用windows文件资源管理器&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240719103900796.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240719103900796&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;使用rsync&lt;/p&gt;
+&lt;p&gt;对于更大的文件或需要同步多个文件/目录时，&lt;code&gt;rsync&lt;/code&gt; 是一个高效的工具：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;基本语法&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rsync &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;options&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; destination
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;source&lt;/strong&gt;：源文件或目录的路径。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;destination&lt;/strong&gt;：目标文件或目录的路径。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;常用选项&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;-a, &amp;ndash;archive&lt;/strong&gt;：这是最常用的选项之一，用于归档模式，它等同于 &lt;code&gt;-rlptgoD&lt;/code&gt;（递归、保持符号链接、保持权限、保持时间戳、保持属组、保持所有者、保持设备文件）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-v, &amp;ndash;verbose&lt;/strong&gt;：详细模式，会显示更多信息。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-z, &amp;ndash;compress&lt;/strong&gt;：在传输时压缩数据。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ndash;delete&lt;/strong&gt;：在同步时删除目标中存在而源中不存在的文件。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-r, &amp;ndash;recursive&lt;/strong&gt;：递归复制所有子目录。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-u, &amp;ndash;update&lt;/strong&gt;：仅更新比目标文件更新的源文件。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ndash;exclude&lt;/strong&gt;：排除匹配模式的文件或目录。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ndash;include&lt;/strong&gt;：包括匹配模式的文件或目录。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 WSL 终端中运行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rsync -avz /mnt/c/Users/yourwindowsusername/path/to/source/ ~/destination/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;em&gt;PS：在传输文件时因C盘空间不足导致的传输终端可能会引发wsl控制台报错：”灾难性故障“。此时关闭wsl，对C盘进行系统错误检查、修复驱动文件、重启电脑之后可能会解决问题。&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;从wsl直接读取windows中的文件&#34;&gt;从WSL直接读取Windows中的文件
+&lt;/h3&gt;&lt;p&gt;在 WSL 中，所有 Windows 的文件都被自动挂载在 &lt;code&gt;/mnt/&lt;/code&gt; 目录下&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意事项&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;文件权限和元数据&lt;/strong&gt;：虽然你可以从 WSL 访问 Windows 文件，但是这些文件的 Linux 文件权限和元数据可能不会完全正确。WSL 会尽力模拟这些权限，但可能有限制。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;性能考虑&lt;/strong&gt;：从WSL访问/mnt/中的文件性能较差&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;文件锁和同步&lt;/strong&gt;：同时从 Windows 和 Linux 访问同一文件时，需要注意文件锁和数据同步问题，避免数据损坏。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;路径注意&lt;/strong&gt;：在编写脚本或运行自动化任务时，注意路径分隔符的差异（Windows 使用 &lt;code&gt;\&lt;/code&gt;，而 Linux 使用 &lt;code&gt;/&lt;/code&gt;）。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>深度学习 on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
+        <description>Recent content in 深度学习 on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Wed, 12 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>[Transformer part 1] Attention 小记</title>
+        <link>http://101.200.73.250:80/p/transformer-part-1-attention-%E5%B0%8F%E8%AE%B0/</link>
+        <pubDate>Wed, 12 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/transformer-part-1-attention-%E5%B0%8F%E8%AE%B0/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image.png" alt="Featured image of post [Transformer part 1] Attention 小记" /&gt;&lt;h1 id=&#34;attention-小记&#34;&gt;Attention 小记
+&lt;/h1&gt;&lt;p&gt;提出目的：解决 Encoder-Decoder 应对长输入时出现的信息丢失问题&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

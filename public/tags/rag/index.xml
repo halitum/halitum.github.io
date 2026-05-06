@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>RAG on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/tags/rag/</link>
+        <description>Recent content in RAG on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Wed, 18 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/tags/rag/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>[读论文] 搜索 RAG 的最佳实践</title>
+        <link>http://101.200.73.250:80/p/%E8%AF%BB%E8%AE%BA%E6%96%87-%E6%90%9C%E7%B4%A2-rag-%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+        <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/%E8%AF%BB%E8%AE%BA%E6%96%87-%E6%90%9C%E7%B4%A2-rag-%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218215911487.png" alt="Featured image of post [读论文] 搜索 RAG 的最佳实践" /&gt;&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218215911487.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218215911487&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“这篇文章虽然在 24/06 成稿，但是没有评估 24/02 提出的 图+RAG 范式。是一篇 RAG trick 的总结”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;原文地址：&lt;a class=&#34;link&#34; href=&#34;https://arxiv.org/pdf/2407.01219&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Searching for Best Practices in Retrieval-Augmented Generation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;highlight&#34;&gt;Highlight
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;通过大量实验彻底调查现有（截至24/06） RAG 方法及其组合&lt;/li&gt;
+&lt;li&gt;引入了一个全面的评估指标框架&lt;/li&gt;
+&lt;li&gt;多模&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;ragworkflow&#34;&gt;RAGWorkflow
+&lt;/h2&gt;</description>
+        </item>
+        <item>
+        <title>[读论文] LightRAG</title>
+        <link>http://101.200.73.250:80/p/%E8%AF%BB%E8%AE%BA%E6%96%87-lightrag/</link>
+        <pubDate>Tue, 17 Dec 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/%E8%AF%BB%E8%AE%BA%E6%96%87-lightrag/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218104735239.png" alt="Featured image of post [读论文] LightRAG" /&gt;&lt;blockquote&gt;
+&lt;p&gt;“优点是便宜且易于增删改查，缺点是搜索深度变差，广度不一定有所提高。性能是否能如实验结果所说能打赢GraphRAG有待考察”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;原文地址：&lt;a class=&#34;link&#34; href=&#34;https://arxiv.org/pdf/2410.05779&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;LIGHTRAG: SIMPLE AND FAST RETRIEVAL-AUGMENTED GENERATION&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;highlight&#34;&gt;Highlight
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;图结构文本索引&lt;/strong&gt;：LLM-based，用来捕捉实体间的关系、优化向量检索&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;双层次检索模式&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;低层次检索：处理特定查询键，精准检索&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;高层次检索：处理抽象查询键，检索概念性总体主题&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;增量更新算法&lt;/strong&gt;：用来实时适应新数据&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;overall-framework&#34;&gt;Overall framework
+&lt;/h2&gt;&lt;p&gt;$$
+\mathcal{M} = \left( \mathcal{G}, \mathcal{R} = (\varphi, \psi) \right), \quad
+\mathcal{M}(q; \mathcal{D}) = \mathcal{G} \left( q, \psi(q; \widehat{\mathcal{D}}) \right), \quad
+\widehat{\mathcal{D}} = \varphi(\mathcal{D})
+$$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;$\mathcal{M}$：整体框架&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;$\mathcal{D}$：外部数据库&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;$\widehat{\mathcal{D}}$：索引数据结构（知识图谱）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;$\mathcal{q}$：输入查询&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;$\mathcal{G}$：生成模块&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;$\mathcal{R}$：检索模块&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;$\varphi()$：数据索引器&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218084946712.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218084946712&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;graph-based-text-indexing-文本索引构建方法&#34;&gt;GRAPH-BASED TEXT INDEXING 文本索引构建方法
+&lt;/h2&gt;&lt;p&gt;$$
+\widehat{D} = (\widehat{V}, \widehat{E}) = \text{Dedupe} \circ \text{Prof}(V, E), \quad  V, E = \bigcup_{D_i \in D} \text{Recog}(D_i)
+$$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\mathcal{D}$：输入的原始文本&lt;/li&gt;
+&lt;li&gt;$\mathcal{D}_i$：原始文本被分成的每个块（用来提高文本处理效率）&lt;/li&gt;
+&lt;li&gt;$\mathcal{V}$：从所有文档中提取的实体（节点）集合。&lt;/li&gt;
+&lt;li&gt;$\mathcal{E}$：从所有文档中提取的关系（边）集合&lt;/li&gt;
+&lt;li&gt;$\hat{\mathcal{V}}$：去重后的实体集合&lt;/li&gt;
+&lt;li&gt;$\widehat{E}$：去重后的关系集合&lt;/li&gt;
+&lt;li&gt;$\hat{\mathcal{D}}$：最终生成的知识图结构&lt;/li&gt;
+&lt;li&gt;$\text{Recog}(\mathcal{D}_i)$：从 $\mathcal{D}_i$ 提取实体和关系&lt;/li&gt;
+&lt;li&gt;$\bigcup_{\mathcal{D}_i \in \mathcal{D}}$：将所有文本块 $\mathcal{D}_i$ 的提取结果合并&lt;/li&gt;
+&lt;li&gt;$\text{Prof}(\mathcal{V}, \mathcal{E})$：&lt;em&gt;用于键值对生成的LLM分析&lt;/em&gt; *****&lt;/li&gt;
+&lt;li&gt;$\text{Dedupe}(\mathcal{V}&lt;em&gt;{\text{prof}}, \mathcal{E}&lt;/em&gt;{\text{prof}})$：对 $\mathcal{V}&lt;em&gt;{\text{prof}}$ 和 $\mathcal{E}&lt;/em&gt;{\text{prof}}$ 去重&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;索引增强模块&lt;/strong&gt;$\text{Prof}(\mathcal{V}, \mathcal{E})$：&lt;/p&gt;
+&lt;p&gt;LLM驱动，为每个节点和边生成一个索引键值对&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;索引键：一个单词或短短语&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;实体使用它们的名称作为唯一的索引键&lt;/li&gt;
+&lt;li&gt;关系可能有多个索引键，这些索引键来自 LLM 的增强（包括来着连接的实体的全局主题）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;值：基于 LLM 的文本总结，为检索到的内容提供上下文信息&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;效果&#34;&gt;效果
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;通过去重最小化图的大小&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;键值对数据结构增强了向量检索时的效率&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;快速适应增量数据&lt;/strong&gt;，引入图结构的同时保留知识库增删改查功能。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;对于新文档D′，增量更新算法使用与之前相同的基于图的索引步骤$\varphi$对其进行处理，从而得到D′ = (ˆV′, ˆE′)。随后，通过取节点集V 和 ˆV′的并集，以及边集E 和 ˆE′的并集，将新的图数据与原始图数据结合起来。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;dual-level-retrieval-paradigm-检索方法&#34;&gt;DUAL-LEVEL RETRIEVAL PARADIGM 检索方法
+&lt;/h2&gt;&lt;pre class=&#34;mermaid&#34;&gt;flowchart TD
+    A[User Query] --&amp;gt; B[Query Analysis]
+    B --&amp;gt; C[Specific Queries]
+    B --&amp;gt; D[Abstract Queries]
+
+    C --&amp;gt; E[Low-Level Retrieval]
+    E --&amp;gt; G[Retrieve Specific Entities]
+    G --&amp;gt; I[Return Detail-Oriented Results]
+
+    D --&amp;gt; F[High-Level Retrieval]
+    F --&amp;gt; H[Aggregate Information Across Entities]
+    H --&amp;gt; J[Return Conceptual Insights]
+  &lt;/pre&gt;
+  &lt;p&gt;具体检索方式：&lt;/p&gt;
+&lt;pre class=&#34;mermaid&#34;&gt;flowchart TD
+    B[结合图和向量的检索方法] --&amp;gt; K[Query关键词提取]
+    K --&amp;gt; L[提取出本地关键词 k_l]
+    K --&amp;gt; M[提取出全局关键词 k_g]
+
+    L --&amp;gt; N[局部查询关键字与候选实体进行匹配&amp;lt;使用向量检索&amp;gt;]
+    M --&amp;gt; O[全局关键字与关系进行匹配&amp;lt;使用向量检索&amp;gt;]
+
+    N --&amp;gt; Q[从一跳相邻节点收集检索到的图元素的局部子图内的邻近节点&amp;lt;进一步增强高阶相关性&amp;gt;]
+    O --&amp;gt; Q
+  &lt;/pre&gt;
+  &lt;h2 id=&#34;retrieval-augmented-answer-generation-内容生成&#34;&gt;RETRIEVAL-AUGMENTED ANSWER GENERATION 内容生成
+&lt;/h2&gt;&lt;p&gt;将分析函数P(·)生成的值（包括名称，实体和关系的描述，以及原始文本的摘录）作为提示集成到 LLM 输入中&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218102506183.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218102506183&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;成果&#34;&gt;成果
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;生成效果&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218104148502.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218104148502&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;效果优于所有未使用图的方法。在特定领域数据集上优于GraphRAG&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;“图谱结构扁平，还只取一跳相邻节点的数据，为什么能超过GraphRAG？”&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;成本分析&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218104252359.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218104252359&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;token消耗量远低于GraphRAG&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218113158547.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218113158547&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;结合上述公式与每个 chunk 1200 token的信息可以估计为**四个数据集（1000万token）**构建知识图谱，总共消耗约 &lt;strong&gt;2000万 tokens&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;GitHub：&lt;a class=&#34;link&#34; href=&#34;https://github.com/HKUDS/LightRAG&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;HKUDS/LightRAG: &amp;ldquo;LightRAG: Simple and Fast Retrieval-Augmented Generation&amp;rdquo;&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;算法实现&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218104937017.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Figure 1: LightRAG Indexing Flowchart&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218105032627.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Figure 2: LightRAG Retrieval and Querying Flowchart&#34;
+	
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>[读论文] GraphRAG</title>
+        <link>http://101.200.73.250:80/p/%E8%AF%BB%E8%AE%BA%E6%96%87-graphrag/</link>
+        <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/%E8%AF%BB%E8%AE%BA%E6%96%87-graphrag/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218162305869.png" alt="Featured image of post [读论文] GraphRAG" /&gt;&lt;blockquote&gt;
+&lt;p&gt;“在大部分指标上存在特定社区层次结果优于baseline，存在缺点1. 不能根据 Query 的期望的潜在搜索广度/深度动态适应不同层次的社区摘要进行回答，2. 耗费太高，3. 知识库难以实现增删改查。官网的项目配图很好看，评价为未来可期”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;原文地址：&lt;a class=&#34;link&#34; href=&#34;https://arxiv.org/pdf/2404.16130&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;From Local to Global: A Graph RAG Approach to Query-Focused Summarization&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;highlight&#34;&gt;Highlight
+&lt;/h2&gt;&lt;p&gt;通过两个阶段（索引和查询）构建基于图的文本索引&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先从源文档构建实体知识图，然后为密切相关的实体组预生成社区（community）摘要&lt;/li&gt;
+&lt;li&gt;对于Query，将每个社区摘要作为生成的部分响应（partial response），在最终响应（final response）中总结所有部分响应&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;approach--pipeline&#34;&gt;Approach &amp;amp; Pipeline
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218172716864.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218172716864&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;source-documents-text-chunks&#34;&gt;Source Documents →Text Chunks
+&lt;/h3&gt;&lt;p&gt;每个文本块被 LLM prompts 提取出图索引中的元素。值得注意的是，chunk越大，LLM调用就越少，但相应会导致召回率下降&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;召回率（Recall）&lt;/strong&gt; 是信息检索中的指标，用于衡量被检索系统正确识别的重要信息占全部重要信息的比例。公式为：
+$$
+\text{召回率} = \frac{\text{正确检索出的重要信息数量}}{\text{全部重要信息数量}}
+$$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218174112881.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218174112881&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;随着 chunk size 上升，提取到的实体数目随之下降。解决方法是引入下文的“多轮收集”机制&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;text-chunkselement-instances&#34;&gt;Text Chunks→Element Instances
+&lt;/h3&gt;&lt;p&gt;Element 指的是节点、边、或声明（声明就是节点或边的附加信息）&lt;/p&gt;
+&lt;p&gt;这一步是从每个源文本块中识别和提取图节点（实体）和边（关系），使用多部分 LLM prompts （主要是 few-shot examples 方法）来完成此操作。提取出的 实体 和 关系 使用元组来表示。该元组属于一个 &lt;strong&gt;实例组&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例如：
+（实体1，关系1，实体2）、（实体2，关系2，实体3）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;prompts 的具体要求是，首先识别文本中的所有实体，包括它们的名称、类型和描述，然后识别明确相关实体之间的所有关系，包括源和目标实体，以及它们之间关系的&lt;u&gt;描述&lt;/u&gt;（作为声明）&lt;/p&gt;
+&lt;p&gt;这一步使用多轮“收集”，直到指定的最大值，允许我们使用更大的 chunk size，而不会降低质量&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;element-instances--element-summaries&#34;&gt;Element Instances → Element Summaries
+&lt;/h3&gt;&lt;p&gt;这一步的目的是从元素中提取出抽象摘要的描述。具体操作为，在匹配的实例组上进行进一步的LLM总结
+一个潜在的问题：同一实体会被提取出多种不同表示的元素实例。解决方法是在之后的步骤中将语义相近的实例组划分到一个社区中&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;element-summaries--graph-communities&#34;&gt;Element Summaries → Graph Communities
+&lt;/h3&gt;&lt;p&gt;使用聚类算法将语义相近的元素实例合并为一个社区（社区中的节点比其他节点具有更强的连接）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;具体来说，graphRAG中使用了 Leiden &lt;strong&gt;社区检测&lt;/strong&gt;（Community Detection）的图论算法&lt;/p&gt;
+&lt;p&gt;这种算法可以构建出 &lt;strong&gt;分层的社区结构&lt;/strong&gt;——社区不仅仅是独立的群体，而是具有层级关系的群体结构&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Leiden算法中的分层社区结构&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;它通过 &lt;strong&gt;分层合并&lt;/strong&gt; （coarsing）过程，首先将图分成较大、较粗的社区，然后逐步细化这些社区，最终得到多个层级的社区划分。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第一层&lt;/strong&gt;：图的最顶层会将节点分为较大的社区。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二层及以后&lt;/strong&gt;：每个较大的社区会进一步细化为子社区，直到达到较小的细分。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;graph-communitiescommunity-summaries&#34;&gt;Graph Communities→Community Summaries
+&lt;/h3&gt;&lt;p&gt;这一步的目的是为 Leiden 层次结构中的每个社区创建类似报告的摘要，这些报告为每个子主题提供了更多细节。&lt;/p&gt;
+&lt;p&gt;社区摘要生成方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;叶级社区：为每个元素摘要进行排序（按总体突出度降序），为其进行报告生成&lt;/li&gt;
+&lt;li&gt;更高级的社区：如果所有子社区的元素摘要可以适配 LLM 上下文窗口大小，则直接生成报告。否则将长元素摘要替换成同社区内的短元素摘要&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;community-summariescommunity-answersglobal-answer&#34;&gt;Community Summaries→Community Answers→Global Answer
+&lt;/h3&gt;&lt;p&gt;给定一个用户查询，可以使用前一步生成的社区摘要在多阶段过程中生成最终答案&lt;/p&gt;
+&lt;p&gt;对于给定的社区级别，答案生成流程为：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;打乱社区摘要，然后分成多个预定大小的块（大小由&lt;strong&gt;token数量限制&lt;/strong&gt;决定）&lt;/li&gt;
+&lt;li&gt;对每个摘要块并行生成 Community Answers，然后用 LLM 对生成的答案打分（0-100），过滤掉0分答案&lt;/li&gt;
+&lt;li&gt;将 Community Answers 按得分从高到低排序，选出几个帮助度最高的答案，添加到上下文窗口直到达到token限制。最终生成的全局答案会被返回给用户&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;evaluation&#34;&gt;Evaluation
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;• CO. Uses root-level community summaries (fewest in number) to answer user queries.
+• C1. Uses high-level community summaries to answer queries. These are sub-communities
+of C0, if present, otherwise C0 communities projected down.
+• C2. Uses intermediate-level community summaries to answer queries. These are sub-
+communities of C1, if present, otherwise C1 communities projected down.
+• C3. Uses low-level community summaries (greatest in number) to answer queries. These
+are sub-communities of C2, if present, otherwise C2 communities projected down.
+• TS. The same method as in subsection 2.6, except source texts (rather than community
+summaries) are shuffled and chunked for the map-reduce summarization stages.
+• SS. An implementation of na¨ıve RAG in which text chunks are retrieved and added to the
+available context window until the specified token limit is reached.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218190402441.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20241218190402441&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“消耗了巨量 token 但未指定社区层级的生成效果却很一般？”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;结果表明在不同的任务上，不同层次社区的生成结果在某方面的表现与其他层次社区存在差异。值得注意的是，所有图方法的 Directness 指标都劣于 baseline&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

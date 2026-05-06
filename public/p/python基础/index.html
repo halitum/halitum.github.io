@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="输入输出\rprint（）:基础控制台输出 将（ ）中的内容输入到控制台（console）中 直接输出字符串要使用引号包裹 1 print(&#34;hello, world&#34;) 使用“end”来控制输出结尾（默认以\\n（换行）结尾） 1 2 3 print(&#34;hello, world&#34;，end=&#34;&#34;)\t#不换行结束 print(&#34;hello, world&#34;，end=&#34;*&#34;)\t#以*作为结尾 print(&#34;hello, world&#34;，end=&#34;\\t&#34;)\t#以tab作为结尾 一次输出多个内容，默认以空格连接。使用sep控制分隔符 1 2 3 print(&#34;hell“，”o, w“，”orld&#34;)\t#使用“ ”分隔 print(&#34;hell“，”o, w“，”orld&#34;，sep=&#34;&#34;)\t#取消分隔 print(&#34;hell“，”o, w“，”orld&#34;，sep=&#34;*&#34;)\t#使用“*”分隔 括号中直接填入变量名可输出变量的内容 1 2 x = 10 print(x)\t#输出10 使用f·string可选项来组合输出变量和字符串 1 2 x = 10 print(f&#34;x的值是{x}&#34;)\t#输出为：x的值是10 使用三连引号一次性输出多行内容 1 2 3 4 5 print(&#34;&#34;&#34; 这是第一行 这是第二行 这是第三行 &#34;&#34;&#34;) 字符串可使用加法和乘法 加法：效果等同于strcat 乘法：将字符串输出n次 repr()函数：显示字符串在print中打出的形式 input（）:基础控制台输入 首先将（ ）中的内容输入到控制台（console）中，然后向console返回stdin的输入内容 返回值为一个字符串（可使用强制字符串转换函数变成其他数据类型）">
+<title>Python基础</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/python%E5%9F%BA%E7%A1%80/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="Python基础">
+<meta property='og:description' content="输入输出\rprint（）:基础控制台输出 将（ ）中的内容输入到控制台（console）中 直接输出字符串要使用引号包裹 1 print(&#34;hello, world&#34;) 使用“end”来控制输出结尾（默认以\\n（换行）结尾） 1 2 3 print(&#34;hello, world&#34;，end=&#34;&#34;)\t#不换行结束 print(&#34;hello, world&#34;，end=&#34;*&#34;)\t#以*作为结尾 print(&#34;hello, world&#34;，end=&#34;\\t&#34;)\t#以tab作为结尾 一次输出多个内容，默认以空格连接。使用sep控制分隔符 1 2 3 print(&#34;hell“，”o, w“，”orld&#34;)\t#使用“ ”分隔 print(&#34;hell“，”o, w“，”orld&#34;，sep=&#34;&#34;)\t#取消分隔 print(&#34;hell“，”o, w“，”orld&#34;，sep=&#34;*&#34;)\t#使用“*”分隔 括号中直接填入变量名可输出变量的内容 1 2 x = 10 print(x)\t#输出10 使用f·string可选项来组合输出变量和字符串 1 2 x = 10 print(f&#34;x的值是{x}&#34;)\t#输出为：x的值是10 使用三连引号一次性输出多行内容 1 2 3 4 5 print(&#34;&#34;&#34; 这是第一行 这是第二行 这是第三行 &#34;&#34;&#34;) 字符串可使用加法和乘法 加法：效果等同于strcat 乘法：将字符串输出n次 repr()函数：显示字符串在print中打出的形式 input（）:基础控制台输入 首先将（ ）中的内容输入到控制台（console）中，然后向console返回stdin的输入内容 返回值为一个字符串（可使用强制字符串转换函数变成其他数据类型）">
+<meta property='og:url' content='http://101.200.73.250:80/p/python%E5%9F%BA%E7%A1%80/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:published_time' content='2023-11-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-21T00:00:00&#43;00:00'/><meta property='og:image' content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231208184400735.png' />
+<meta name="twitter:title" content="Python基础">
+<meta name="twitter:description" content="输入输出\rprint（）:基础控制台输出 将（ ）中的内容输入到控制台（console）中 直接输出字符串要使用引号包裹 1 print(&#34;hello, world&#34;) 使用“end”来控制输出结尾（默认以\\n（换行）结尾） 1 2 3 print(&#34;hello, world&#34;，end=&#34;&#34;)\t#不换行结束 print(&#34;hello, world&#34;，end=&#34;*&#34;)\t#以*作为结尾 print(&#34;hello, world&#34;，end=&#34;\\t&#34;)\t#以tab作为结尾 一次输出多个内容，默认以空格连接。使用sep控制分隔符 1 2 3 print(&#34;hell“，”o, w“，”orld&#34;)\t#使用“ ”分隔 print(&#34;hell“，”o, w“，”orld&#34;，sep=&#34;&#34;)\t#取消分隔 print(&#34;hell“，”o, w“，”orld&#34;，sep=&#34;*&#34;)\t#使用“*”分隔 括号中直接填入变量名可输出变量的内容 1 2 x = 10 print(x)\t#输出10 使用f·string可选项来组合输出变量和字符串 1 2 x = 10 print(f&#34;x的值是{x}&#34;)\t#输出为：x的值是10 使用三连引号一次性输出多行内容 1 2 3 4 5 print(&#34;&#34;&#34; 这是第一行 这是第二行 这是第三行 &#34;&#34;&#34;) 字符串可使用加法和乘法 加法：效果等同于strcat 乘法：将字符串输出n次 repr()函数：显示字符串在print中打出的形式 input（）:基础控制台输入 首先将（ ）中的内容输入到控制台（console）中，然后向console返回stdin的输入内容 返回值为一个字符串（可使用强制字符串转换函数变成其他数据类型）"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231208184400735.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5c83ce115cee591a70a1d036fffd59cb_113467_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halitum'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://scholar.google.com/citations?hl=zh-CN&amp;user=0UXNJG0AAAAJ'
+                        target="_blank"
+                        title="Google Scolar"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="icon icon-tabler icon-tabler-google-scholar" 
+  width="24" 
+  height="24" 
+  viewBox="-1.2 -1.2 24 24" 
+  stroke-width="2" 
+  stroke="currentColor" 
+  fill="none" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+>
+  <path stroke="none" d="M0 0h512v512H0z" fill="none"/>
+  <path d="M16.49109375 12.59296875s0 0.00421875 0.00421875 0.00421875c0.388125 0.8184375 0.6075 1.7339062500000002 0.6075 2.7C17.098593750000003 18.777656250000003 14.28046875 21.6 10.8 21.6s-6.298593750000001 -2.8223437500000004 -6.298593750000001 -6.298593750000001c0 -0.96609375 0.21937500000000001 -1.8815625000000002 0.6075 -2.7 0.07171875 -0.151875 0.151875 -0.30375 0.23625 -0.45140625 0.18562500000000004 -0.320625 0.39656250000000004 -0.62015625 0.6328125 -0.8985937500000001 1.1559375 -1.3753125000000002 2.8898437500000003 -2.24859375 4.826250000000001 -2.24859375 1.4175000000000002 0 2.7253125 0.46828125000000004 3.78 1.26140625 0.38390625 0.29109375000000004 0.7340625 0.62015625 1.0462500000000001 0.99140625 0.23625 0.2784375 0.4471875 0.5821875000000001 0.6328125 0.8985937500000001 0.084375 0.1434375 0.1603125 0.29531250000000003 0.23203125000000002 0.44296875zm1.11375 -0.7931250000000001c-1.2698437500000002 -2.46375 -3.8390625000000003 -4.15125 -6.804843750000001 -4.15125s-5.535 1.6875 -6.804843750000001 4.15125L0 8.55140625 10.8 0l10.8 8.55140625 -3.9951562500000004 3.25265625z">
+  </path>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:halitum0216@gmail.com'
+                        target="_blank"
+                        title="Mail"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com/Halit_beaver'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#输入输出">输入输出</a></li>
+    <li><a href="#错误类型">错误类型</a></li>
+    <li><a href="#变量">变量</a></li>
+    <li><a href="#函数">函数</a></li>
+    <li><a href="#导入库包括函数常数值其它工具">导入库（包括函数，常数值，其它工具）</a></li>
+    <li><a href="#基础文件操作">基础文件操作</a></li>
+    <li><a href="#数据类型">数据类型</a>
+      <ol>
+        <li><a href="#1-常见内置数据类型">1. 常见内置数据类型</a></li>
+        <li><a href="#2-其他数据类型">2. 其他数据类型</a></li>
+        <li><a href="#3常用内置常数">3.常用内置常数</a></li>
+      </ol>
+    </li>
+    <li><a href="#选择语句">选择语句</a>
+      <ol>
+        <li><a href="#1-if-elif-else">1. if-elif-else</a></li>
+        <li><a href="#2-三元运算符">2. 三元运算符</a></li>
+        <li><a href="#3-match-case">3. Match-case</a></li>
+      </ol>
+    </li>
+    <li><a href="#循环语句">循环语句</a>
+      <ol>
+        <li><a href="#1-for循环语句">1. for循环语句</a></li>
+        <li><a href="#2-while条件循环语句">2. while([条件])循环语句</a></li>
+      </ol>
+    </li>
+    <li><a href="#运算符">运算符</a>
+      <ol>
+        <li><a href="#1-常见内置运算符">1. 常见内置运算符</a></li>
+        <li><a href="#2-类型影响语义">2. 类型影响语义</a></li>
+        <li><a href="#3-运算符优先级">3. 运算符优先级</a></li>
+        <li><a href="#4逻辑运算符由布尔值参与运算">4.逻辑运算符——由布尔值参与运算</a></li>
+        <li><a href="#5-基本数学函数">5. 基本数学函数</a></li>
+      </ol>
+    </li>
+    <li><a href="#字符串">字符串</a>
+      <ol>
+        <li><a href="#1-单个字符索引将字符串作为字符数组处理">1. 单个字符索引：将字符串作为字符数组处理</a></li>
+        <li><a href="#2-字符串切片用来获取字符串的一部分子串">2. 字符串切片：用来获取字符串的一部分（子串）</a></li>
+        <li><a href="#3-字符串相关函数">3. 字符串相关函数</a></li>
+        <li><a href="#4-字符串相关方法">4. 字符串相关方法</a></li>
+      </ol>
+    </li>
+    <li><a href="#字符串拼接">字符串拼接</a>
+      <ol>
+        <li><a href="#1-使用加号操作符同理">1. 使用加号（<code>+</code>）操作符（+=同理）</a></li>
+        <li><a href="#2-使用字符串格式化">2. 使用字符串格式化</a></li>
+        <li><a href="#3-使用-join-方法">3. 使用 <code>join()</code> 方法</a></li>
+        <li><a href="#4-使用-stringio">4. 使用 StringIO</a></li>
+      </ol>
+    </li>
+    <li><a href="#hash与id函数">hash与id函数</a>
+      <ol>
+        <li><a href="#hash哈希函数">hash哈希函数</a></li>
+        <li><a href="#id函数">id函数</a></li>
+        <li><a href="#assert断言函数用于程序调试">assert()：断言函数（用于程序调试）</a></li>
+      </ol>
+    </li>
+    <li><a href="#python的空值">python的空值</a>
+      <ol>
+        <li><a href="#无形空">“无形”空</a></li>
+        <li><a href="#有形空">“有形”空</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/python%E5%9F%BA%E7%A1%80/">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231208184400735.png" loading="lazy" alt="Featured image of post Python基础" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" style="background-color: #2a9d8f; color: #fff;">
+                编程语言
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/python%E5%9F%BA%E7%A1%80/">Python基础</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 21, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="输入输出">输入输出
+</h2><ol>
+<li>
+<p><strong>print（）</strong>:基础控制台输出</p>
+<p>将（ ）中的内容输入到控制台（console）中</p>
+<ul>
+<li>
+<p>直接输出字符串要使用引号包裹</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;hello, world&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用“end”来控制输出结尾（默认以\n（换行）结尾）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;hello, world&#34;</span><span class="err">，</span><span class="n">end</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">)</span>	<span class="c1">#不换行结束</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;hello, world&#34;</span><span class="err">，</span><span class="n">end</span><span class="o">=</span><span class="s2">&#34;*&#34;</span><span class="p">)</span>	<span class="c1">#以*作为结尾</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;hello, world&#34;</span><span class="err">，</span><span class="n">end</span><span class="o">=</span><span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">)</span>	<span class="c1">#以tab作为结尾</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>一次输出多个内容，默认以空格连接。使用sep控制分隔符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;hell“，”o, w“，”orld&#34;</span><span class="p">)</span>	<span class="c1">#使用“ ”分隔</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;hell“，”o, w“，”orld&#34;</span><span class="err">，</span><span class="n">sep</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">)</span>		<span class="c1">#取消分隔</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;hell“，”o, w“，”orld&#34;</span><span class="err">，</span><span class="n">sep</span><span class="o">=</span><span class="s2">&#34;*&#34;</span><span class="p">)</span>		<span class="c1">#使用“*”分隔</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>括号中直接填入变量名可输出变量的内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>	<span class="c1">#输出10</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用f·string可选项来组合输出变量和字符串</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;x的值是</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>	<span class="c1">#输出为：x的值是10</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用三连引号一次性输出多行内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">这是第一行
+</span></span></span><span class="line"><span class="cl"><span class="s2">这是第二行
+</span></span></span><span class="line"><span class="cl"><span class="s2">这是第三行
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>字符串可使用加法和乘法</p>
+<p>加法：效果等同于strcat</p>
+<p>乘法：将字符串输出n次</p>
+</li>
+<li>
+<p>repr()函数：显示字符串在print中打出的形式</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-11-25%20213205.png" alt="屏幕截图 2023-11-25 213205" style="zoom:50%;" />
+</li>
+</ul>
+</li>
+<li>
+<p><strong>input（）</strong>:基础控制台输入</p>
+<p>首先将（ ）中的内容输入到控制台（console）中，然后向console返回stdin的输入内容</p>
+<p>返回值为一个字符串（可使用强制字符串转换函数变成其他数据类型）</p>
+<blockquote>
+<p>强制类型转换函数如int（）：将（）变量数据类型转变为整形</p>
+<p>使用实例：x = int(input(“请输入一个数字”))</p>
+</blockquote>
+<ul>
+<li>
+<p>一次输入多个内容，默认以空格分隔。使用split控制分隔符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&#34;输入两个内容，以逗号分隔&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ol>
+<h2 id="错误类型">错误类型
+</h2><ul>
+<li>SyntaxError 语法错误（代码不会运行）</li>
+<li>RuntimeError 崩溃（代码运行中）</li>
+<li>LogicalError 逻辑错误（代码完成运行，但得不到想要的结果）</li>
+<li>TyoeError 类型错误（输入函数的数据类型与预设不符</li>
+</ul>
+<h2 id="变量">变量
+</h2><ul>
+<li>
+<p>使用“=”对变量进行赋值，新赋的值会覆盖旧的值，且无需考虑数据类型</p>
+</li>
+<li>
+<p>多变量赋值：a = b = c = 2     ;       a, b, c = 1, 2, 3</p>
+</li>
+<li>
+<p>变量的作用域：变量的作用是有范围的，超出作用域后变量不可见</p>
+<ul>
+<li>函数外部定义的变量具有全局作用域</li>
+<li>函数内部定义的变量只能在函数内部起作用，而与其他函数中定义的同名变量无关</li>
+<li>在函数内部修改全局变量的值时需要先在函数内部声明该全局变量：global [变量名]</li>
+</ul>
+</li>
+<li>
+<p>Python中的变量本质上是一个标签，它的作用是指向数据对应存储位置的内存地址。</p>
+<blockquote>
+<p><strong>is关键字</strong></p>
+<p>原型： a is b -&gt; bool</p>
+<p>其中a和b分别指两个变量的变量名，若变量指向的内存地址（对象）一致，则返回布尔True，反之返回False</p>
+</blockquote>
+<blockquote>
+<p><strong>不可变变量（Immutable）</strong>：值一旦创建就不能改变的数据类型。一旦试图改变这些类型的值时，实际上是创建了一个新的对象，并将标签（变量）指向这个新创建的对象</p>
+<ul>
+<li>
+<p>整数（int）</p>
+</li>
+<li>
+<p>浮点数（float）</p>
+</li>
+<li>
+<p>复数（complex）</p>
+</li>
+<li>
+<p>字符串（str）</p>
+</li>
+<li>
+<p>元组（tuple）</p>
+</li>
+<li>
+<p>冻结集合（frozenset）</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>可变变量（Mutable）</strong> ：值可以在不更改其引用的情况下被修改的数据类型，对于这些类型，可以修改它们所包含的值而不需要创建一个新的对象</p>
+<ul>
+<li>列表（list）</li>
+<li>字典（dict）</li>
+<li>集合（set）</li>
+</ul>
+<p>对于可变变量，进行连续赋值时，实际上是将多个变量指向了同一个可变对象，其中任一个发生改变，另一个随之发生改变</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231208184400735.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20231208184400735"
+	
+	
+></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="函数">函数
+</h2><ul>
+<li>
+<p>由两部分构成——header：定义函数的名称与传入的参数名</p>
+<p>​                         |_body：包含函数执行的操作</p>
+</li>
+<li>
+<p>定义方式：         def functionName([参数]):</p>
+<p>​                           	  语句1</p>
+<p>​                                 语句2</p>
+<p>body中语句均需要缩进，当不在缩进表示函数结束</p>
+</li>
+<li>
+<p>return返回：结束函数并返回return后的内容</p>
+<ul>
+<li>函数中不一定需要包括return（此时函数返回值为None）</li>
+<li>return可用来返回一个或多个内容</li>
+<li>return可以返回变量值，也可返回表达式值（表达式需使用括号包裹）</li>
+</ul>
+</li>
+<li>
+<p>函数组合：当出现函数嵌套的情况时，最先执行的是最内侧的函数</p>
+</li>
+<li>
+<p>Helper functions：只用来做一件小任务的函数</p>
+</li>
+</ul>
+<h2 id="导入库包括函数常数值其它工具">导入库（包括函数，常数值，其它工具）
+</h2><ul>
+<li>
+<p>import [库名]</p>
+<p>调用第三方库前需使用pip或conda下载（优先使用pip，conda库不全）</p>
+</li>
+<li>
+<p>调用格式：XX.YY（库名.函数名）</p>
+</li>
+</ul>
+<h2 id="基础文件操作">基础文件操作
+</h2><ul>
+<li>
+<p>open()：打开文件</p>
+<p>原型：open（file, mode)</p>
+<ul>
+<li>
+<p>file：文件名</p>
+</li>
+<li>
+<p>mode：打开模式 -&gt; 决定了文件对象的功能</p>
+</li>
+<li>
+<p>返回值：文件对象</p>
+<blockquote>
+<p>文件打开模式：</p>
+<p>r：以字符串形式只读</p>
+<p>rb：以二进制形式只读</p>
+<p>w：覆盖写入</p>
+<p>a：追加写入</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>close()：关闭文件</p>
+</li>
+</ul>
+<h2 id="数据类型">数据类型
+</h2><h3 id="1-常见内置数据类型">1. 常见内置数据类型
+</h3><ul>
+<li>
+<p>int</p>
+</li>
+<li>
+<p>float（python中的float对应c中的双精度浮点double）</p>
+<blockquote>
+<p>分类：为一个对象赋值，其范围是离散的（对应数据类型int）</p>
+<p>回归：预测一个数，其范围是连续的（对应数据类型float）</p>
+</blockquote>
+</li>
+<li>
+<p>bool：布尔值</p>
+<p>python中逻辑判断表达式的返回值数据类型为bool</p>
+</li>
+<li>
+<p>type：类型——属于一种”类“的对象</p>
+<p>type有同名函数type()：其返回值为括号内变量的数据类型</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/48CA6A277F5B508F2A136B87945E53B0.png" alt="48CA6A277F5B508F2A136B87945E53B0" style="zoom:67%;" />
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/AC78D4B181AD69B349D6710246C88B80.png" alt="AC78D4B181AD69B349D6710246C88B80" style="zoom:67%;" />
+<h3 id="2-其他数据类型">2. 其他数据类型
+</h3><ul>
+<li>
+<p>str字符串       _</p>
+</li>
+<li>
+<p>list列表            |</p>
+</li>
+<li>
+<p>tuple元祖         }—-底层实现都是arry数组</p>
+</li>
+<li>
+<p>set集合            |</p>
+</li>
+<li>
+<p>dict字典        –</p>
+<blockquote>
+<p>也可以用map映射实现</p>
+</blockquote>
+</li>
+<li>
+<p>complexNum复数</p>
+</li>
+<li>
+<p>function函数</p>
+</li>
+<li>
+<p>module模块</p>
+</li>
+</ul>
+<h3 id="3常用内置常数">3.常用内置常数
+</h3><ul>
+<li>True布尔真</li>
+<li>False布尔假</li>
+<li>None空（或空值）</li>
+</ul>
+</li>
+</ul>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231121150926089.png" alt="image-20231121150926089" style="zoom:67%;" />
+<h2 id="选择语句">选择语句
+</h2><h3 id="1-if-elif-else">1. if-elif-else
+</h3><ul>
+<li>相当于c中的if-elseIf-else</li>
+</ul>
+<h3 id="2-三元运算符">2. 三元运算符
+</h3><ul>
+<li>原型：x = <strong>a</strong> if [condition] else <strong>b</strong></li>
+</ul>
+<p>​		三元运算符用来选择性为变量赋值：若conditon为真，则为x赋值a，否则赋值b</p>
+<h3 id="3-match-case">3. Match-case
+</h3><ul>
+<li>
+<p>相当于c中的switch-case</p>
+</li>
+<li>
+<p>用case _ 来代替default（不是必须的）</p>
+</li>
+<li>
+<p>一个case可以设置多个匹配条件，每个条件用  <strong>|</strong>  隔开（ | 相当于or）</p>
+</li>
+<li>
+<p>match可以使用多种匹配模式：</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/15511A7E341905C31F6631E6B13AEDDF.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+</ul>
+<h2 id="循环语句">循环语句
+</h2><blockquote>
+<p><strong>range()</strong>：用来生成一个整数序列，返回的是一个可迭代的“range”对象</p>
+<p>range 函数可以有一到三个参数</p>
+<ol>
+<li>
+<p>一个参数：range(stop)：生成从 0 到 stop-1 的整数序列。
+eg：range(3) 生成 0, 1, 2。</p>
+</li>
+<li>
+<p>两个参数：range(start, stop)：生成从 start 到 stop-1 的整数序列。
+eg：range(1, 4) 生成 1, 2, 3。</p>
+</li>
+<li>
+<p>三个参数：range(start, stop, step)：生成从 start 开始，以 step 为步长，到 stop-1 结束的序列。
+eg：range(1, 8, 2) 生成 1, 3, 5, 7。</p>
+</li>
+</ol>
+<p><strong>ps</strong>：range(a, b)遵循左闭右开</p>
+</blockquote>
+<blockquote>
+<p><strong>in关键字</strong>：用于测试序列（如列表、元组、字符串等）中是否包含某个特定的元素，或者字典中是否包含特定的键，返回值为布尔值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 列表成员资格测试</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="s1">&#39;apple&#39;</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Apple is in the list&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 字符串成员资格测试</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="s1">&#39;a&#39;</span> <span class="ow">in</span> <span class="s1">&#39;cat&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;The letter a is in the word cat&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 字典键测试</span>
+</span></span><span class="line"><span class="cl"><span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">my_dict</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Name is one of the keys in the dictionary&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h3 id="1-for循环语句">1. for循环语句
+</h3><p>for用于遍历序列（如列表、元组、字符串等）或其他可迭代对象的每个元素</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 基础语法</span>
+</span></span><span class="line"><span class="cl"> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"> 	<span class="k">pass</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>element 是变量，它代表 iterable 中当前的元素。
+iterable 是一个序列或任何其他可迭代对象。</li>
+<li>每次迭代中，element 会被赋值为 iterable 中的下一个元素，然后执行代码块。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 遍历列表</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 遍历字符串</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="s2">&#34;hello&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用 range() 生成数字序列</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/76A12FB2A0022634EFC38B91E45C9093.png" style="zoom:50%;" />
+<h3 id="2-while条件循环语句">2. while([条件])循环语句
+</h3><ul>
+<li>当“条件”表达式的返回值为True时执行while中的指令
+<ul>
+<li>“条件”表达式的返回值可以是任何数据类型，python会将其自动转化成bool值</li>
+<li>非零，非空对象都被视为True</li>
+</ul>
+</li>
+<li>可以将else语句与while组合使用：当循环条件变为假时执行else块</li>
+<li>可以用break与continue进行循环控制</li>
+</ul>
+<h2 id="运算符">运算符
+</h2><h3 id="1-常见内置运算符">1. 常见内置运算符
+</h3><ul>
+<li>
+<p>a**b：a的b次方</p>
+</li>
+<li>
+<p>a / b：a对b浮点除，返回值数据类型为float</p>
+</li>
+<li>
+<p>a // b：a对b整除，返回值数据类型为int（小数部分舍弃）</p>
+</li>
+<li>
+<p>a % b：用b对a取余，返回值数据类型为int，涉及负数时运算结果符号与b一致（与c语言不同，且不符合直觉）</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/78A55A74A3145254FDC4C6639E881DD7.png" style="zoom: 67%;" />
+<blockquote>
+<p>math库提供了一种符合c语言标准，且处理浮点数时精度更高的取余函数：</p>
+<p>math.fmod(a,b)：用b对a取余，返回值数据类型为float，涉及负数时运算结果符号与a一致</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/58486CB7903ACD4B8AB69DD0916696B9.png" style="zoom:67%;" />
+</blockquote>
+</li>
+</ul>
+<h3 id="2-类型影响语义">2. 类型影响语义
+</h3><p>运算符的效果有时受运算数据的数据类型影响</p>
+<p>eg：int + int……相加	;	str + str……strcat（str1，str2）</p>
+<h3 id="3-运算符优先级">3. 运算符优先级
+</h3><p>结合律：加减乘除中从左到右运算，次方运算中从右到左运算</p>
+<p>eg：4 - 3 - 2 = (4 - 3) - 2	;	4 ** 3 ** 2 = 4 ** (3 ** 2)</p>
+<h3 id="4逻辑运算符由布尔值参与运算">4.逻辑运算符——由布尔值参与运算
+</h3><ul>
+<li>and与运算：有一个F就返回F</li>
+<li>or或运算：有一个T就返回T</li>
+<li>not非运算：T返回F，F返回T</li>
+</ul>
+<blockquote>
+<p>短路运算：但逻辑运算符左边的返回值已经足够返回结果了，就不会运行右边的表达式</p>
+</blockquote>
+<h3 id="5-基本数学函数">5. 基本数学函数
+</h3><ul>
+<li>
+<p>abs（）：取绝对值</p>
+</li>
+<li>
+<p>max/min（a, b, c,……)：返回最大/最小值</p>
+</li>
+<li>
+<p>pow（a, b）：次方运算  &lt;==&gt; a**b</p>
+</li>
+<li>
+<p>round(a[, n])：四舍五入到指定小数位</p>
+<ul>
+<li>
+<p>a：要四舍五入的数字</p>
+</li>
+<li>
+<p>n：可选，表示要保留的小数位数。默认为0，即四舍五入到最接近的整数</p>
+</li>
+<li>
+<p>当四舍五入的数字位于中间值时（如对 2.5 进行四舍五入），Python 3 的 round 函数会将其四舍五入到最接近的偶数（所谓的“银行家舍入法”）。这是为了减少因四舍五入导致的累积误差。</p>
+</li>
+<li>
+<p>由于浮点数误差，round存在精度丢失（如：round(2.354, 2)返回2.36）</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/2F0A73A2195A70D007F0EEA5A1D16044.png" alt="2F0A73A2195A70D007F0EEA5A1D16044" style="zoom:67%;" />
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="字符串">字符串
+</h2><h3 id="1-单个字符索引将字符串作为字符数组处理">1. 单个字符索引：将字符串作为字符数组处理
+</h3><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231121183012376.png" alt="image-20231121183012376" style="zoom:50%;" />
+<ul>
+<li>索引值可以为负数：此时从字符串最后一位开始记计数</li>
+</ul>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231121183659156.png" alt="image-20231121183659156" style="zoom:50%;" />
+<blockquote>
+<p>字符串具有不可变性,因此<code>s[0] = &quot;H&quot;</code>是不合法的，会引发 TypeError</p>
+</blockquote>
+<h3 id="2-字符串切片用来获取字符串的一部分子串">2. 字符串切片：用来获取字符串的一部分（子串）
+</h3><p>使用索引来定义起始和结束的位置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;hello&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>  <span class="c1"># 输出 &#34;ell&#34;，从索引 1 到 3（左闭右开）</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>冒号左右不填入数值则使用默认数值：s[0:-1]</p>
+<p>第三个参数：step步长</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;hello&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># 先取走h，再隔一个取l，最后取走0，输出“hlo”</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>应用：翻转字符串</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;hello&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># 输出“olleh</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-字符串相关函数">3. 字符串相关函数
+</h3><ul>
+<li>
+<p>enumerate()：枚举函数</p>
+<p>获取一个可迭代对象的“索引-值”键值对</p>
+<p>原型：enumerate（iterable， start=0）</p>
+<ul>
+<li>iterable：可迭代对象</li>
+<li>start：计数起始值，默认为0</li>
+<li>返回值：键值对（两个元素）</li>
+</ul>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-11-25%20220255.png" alt="屏幕截图 2023-11-25 220255" style="zoom:50%;" />
+</li>
+<li>
+<p>zip()：拉链函数</p>
+<p>将多个可迭代对象的元素打包成元祖。特点是可以同时遍历多个对象，适合并行迭代</p>
+<p>原型：zip(iterable1, iterable2, …)</p>
+<ul>
+<li>
+<p>iterable：可迭代对象</p>
+</li>
+<li>
+<p>返回值：一个zip迭代器（每次迭代返回一个元祖）</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231125223543906.png" alt="image-20231125223543906" style="zoom:50%;" />
+</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>如果提供的可迭代对象长度不一致，<code>zip</code> 会以最短的那个为准停止迭代</li>
+</ul>
+</li>
+<li>
+<p>ord()：返回字符对应ASCLL码</p>
+</li>
+<li>
+<p>chr()：返回ASCLL码对应字符</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231125223837627.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20231125223837627"
+	
+	
+></p>
+</li>
+<li>
+<p>eval()：评估函数</p>
+<p>用于返回字符串中表达式的运行结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;x + 1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>	<span class="c1"># 结果为2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="4-字符串相关方法">4. 字符串相关方法
+</h3><ul>
+<li>split与join：互为可逆的一对操作（方法）</li>
+</ul>
+<p>​		split：将字符串分割并返回列表</p>
+<p>​		join：将列表内容合并进字符串中</p>
+<ul>
+<li>
+<p>str.find</p>
+<p>原型：str.find(sub[, start[, end]])</p>
+<ul>
+<li>sub：子字符串</li>
+<li>start：搜索的起始索引，默认为0</li>
+<li>end：搜索的结束位置索引，默认为-1</li>
+<li>返回值：若找到子字符串则返回首次出现的子字符串索引，否则返回-1</li>
+<li>注意：
+<ul>
+<li>find方法严格控制大小写</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="字符串拼接">字符串拼接
+</h2><h3 id="1-使用加号操作符同理">1. 使用加号（<code>+</code>）操作符（+=同理）
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">str1</span> <span class="o">=</span> <span class="s2">&#34;Hello&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">str2</span> <span class="o">=</span> <span class="s2">&#34;World&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">str1</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span> <span class="o">+</span> <span class="n">str2</span>  <span class="c1"># 结果是&#34;Hello World&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-使用字符串格式化">2. 使用字符串格式化
+</h3><ul>
+<li>
+<p>使用 <code>%</code> 操作符：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Alice&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">greeting</span> <span class="o">=</span> <span class="s2">&#34;Hello, </span><span class="si">%s</span><span class="s2">!&#34;</span> <span class="o">%</span> <span class="n">name</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用 <code>str.format()</code> 方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Alice&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">greeting</span> <span class="o">=</span> <span class="s2">&#34;Hello, </span><span class="si">{}</span><span class="s2">!&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用 <code>f-string</code>（在Python 3.6及以上版本中可用）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">name = &#34;Alice&#34;
+</span></span><span class="line"><span class="cl">greeting = f&#34;Hello, {name}!&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="3-使用-join-方法">3. 使用 <code>join()</code> 方法
+</h3><p>当你需要将多个字符串连接成一个字符串时，<code>join()</code>方法是一种高效的方式。它在连接大量字符串时比使用加号更为高效。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Hello&#34;</span><span class="p">,</span> <span class="s2">&#34;World&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="s2">&#34; &#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>  <span class="c1"># 结果是&#34;Hello World&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4-使用-stringio">4. 使用 StringIO
+</h3><p>当需要构建大量字符串时，使用<code>StringIO</code>对象可以提高性能。<code>StringIO</code>可以被视为在内存中的文件对象，你可以像写文件一样写入字符串，然后获取最终的字符串结果。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">output</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&#34;Hello&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&#34;World&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>  <span class="c1"># 结果是&#34;Hello World&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>简单的拼接</p>
+<ul>
+<li><code>+</code>、<code>+=</code></li>
+<li><code>f-string</code></li>
+</ul>
+</li>
+<li>
+<p>大量的字符串拼接</p>
+<ul>
+<li><code>join()</code></li>
+<li><code>StringIO</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="hash与id函数">hash与id函数
+</h2><h3 id="hash哈希函数">hash哈希函数
+</h3><blockquote>
+<p>哈希值：将任意长度的输入转化成一个固定长度的输出，该输出即为哈希值</p>
+<p>注意：</p>
+<ul>
+<li>对于同一输入，哈希算法总是返回同一个固定的哈希值</li>
+<li>从哈希值不能反推出原始输入</li>
+</ul>
+</blockquote>
+<p>原型：hash(obj, /)
+用于返回给定对象的哈希值</p>
+<p>注意：</p>
+<ul>
+<li>大多数内置数据类型都是可哈希对象</li>
+<li>在同一程序运行期间，对象的哈希值不会发生改变</li>
+<li>不能够手动更改一个对象的哈希值（虽然这么做时解释器不会报错）</li>
+<li>不能返回一个可变元素的哈希值（如列表）&gt;可变元素：在发生更改后内存地址不变的元素</li>
+<li>python3中哈希的相关变量：
+<ul>
+<li>哈希对象的内存地址——进程重启时有时复用原进程地址，有时重新分配</li>
+<li>哈希种子——总是在进程重启时重置</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>哈希碰撞：有小概率会出现两个不同的对象拥有相同的哈希值，此时称这两个哈希值发生了哈希碰撞。
+因为哈希碰撞的存在，不能从哈希值反推出对象。
+两个对象相同，那么他们的哈希值一定相同，但哈希值相同，对应对象不一定相同</p>
+</blockquote>
+<h3 id="id函数">id函数
+</h3><p>用于返回一个对象的特征值（在CPython中这个特征值是对象的内存地址）</p>
+<blockquote>
+<p>CPython:由c语言实现的python解释器。作为官方实现，CPython是最广泛使用的Python解释器</p>
+</blockquote>
+<h3 id="assert断言函数用于程序调试">assert()：断言函数（用于程序调试）
+</h3><p>在括号中的表达式为假时，程序将报错：AssertError</p>
+<p>为真时，该条命令等同于pass</p>
+<h2 id="python的空值">python的空值
+</h2><h3 id="无形空">“无形”空
+</h3><ul>
+<li>缩进：tab（等同于四个空格）</li>
+<li>转义：在字符串中出现
+<ul>
+<li>\：\n \t等</li>
+<li>%：格式控制符</li>
+</ul>
+</li>
+</ul>
+<h3 id="有形空">“有形”空
+</h3><ul>
+<li>
+<p>None
+NoneType数据类型的唯一值，是一种被定义的空（c中的Null是一个空指针宏，不能等同于python中的None）</p>
+<ul>
+<li>用于表示变量没有被赋予任何具体值。</li>
+<li>通常用于函数中，表示函数没有明确的返回值。</li>
+<li>在对象引用中，用于表示“空”或“不存在”的对象</li>
+</ul>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20231125224903929.png" alt="image-20231125224903929" style="zoom:50%;" />
+</li>
+<li>
+<p>pass：表示做一条“啥都不做”的指令，但不等于“不做”</p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/python/">Python</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/python%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20250324135236349.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20250324135236349.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Python异步与多线程</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
+

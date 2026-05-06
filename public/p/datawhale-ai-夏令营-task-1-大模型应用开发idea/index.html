@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="做个什么呢">
+<title>[Datawhale AI 夏令营] Task 1 大模型应用开发idea</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-1-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91idea/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="[Datawhale AI 夏令营] Task 1 大模型应用开发idea">
+<meta property='og:description' content="做个什么呢">
+<meta property='og:url' content='http://101.200.73.250:80/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-1-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91idea/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='LLM' /><meta property='article:published_time' content='2024-08-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-08T00:00:00&#43;00:00'/><meta property='og:image' content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/Datawhale.jpg' />
+<meta name="twitter:title" content="[Datawhale AI 夏令营] Task 1 大模型应用开发idea">
+<meta name="twitter:description" content="做个什么呢"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/Datawhale.jpg' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hue32e0a2791941aae0b1e703637e2a862_69258_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#项目背景">项目背景</a></li>
+    <li><a href="#产品功能">产品功能</a></li>
+    <li><a href="#技术方案">技术方案</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#项目背景-1">项目背景</a></li>
+    <li><a href="#产品功能-1">产品功能</a></li>
+    <li><a href="#技术方案-1">技术方案</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-1-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91idea/">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/Datawhale.jpg" loading="lazy" alt="Featured image of post [Datawhale AI 夏令营] Task 1 大模型应用开发idea" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/datawhale%E7%BB%84%E9%98%9F%E5%AD%A6%E4%B9%A0/" style="background-color: #2a9d8f; color: #fff;">
+                DataWhale组队学习
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-1-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91idea/">[Datawhale AI 夏令营] Task 1 大模型应用开发idea</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            做个什么呢
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 08, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p><strong>动手学大模型应用全栈开发</strong> 是 <strong>Datawhale 2024 年 AI 夏令营</strong> 第四期的学习活动</p>
+<ul>
+<li>适合想 <strong>入门并实践</strong> <strong>大模型应用全栈开发</strong> 的学习者参与</li>
+<li>适合想成为 <strong>AI 大模型全栈工程师</strong> 的学习者参与</li>
+</ul>
+<p><strong>学习内容提要</strong>：通过学习大模型部署、大模型检索增强生成（Retrieval Augmented Generation, RAG）实战、大模型微调实战，掌握大模型应用全栈开发</p>
+</blockquote>
+<h1 id="idea1跑团伴侣">IDEA1：跑团伴侣
+</h1><blockquote>
+<p><em><a class="link" href="https://github.com/halitum/trpg-companions"  target="_blank" rel="noopener"
+    >项目仓库</a></em></p>
+</blockquote>
+<h2 id="项目背景">项目背景
+</h2><p>在跑团的爱好者中，组织和管理游戏经常被视为一项具有挑战性的任务。从创建复杂的故事线和角色，到维护游戏的流程和平衡，主持人和玩家们需要投入大量的时间和精力。当前市场上的跑团辅助工具主要集中在角色建立和规则查询等方面，往往缺乏对游戏叙事和动态互动的有效支持。</p>
+<p>为了提高跑团游戏的沉浸感和管理效率，我们计划开发一款名为“跑团助手Agent”的应用。该应用将结合先进的自然语言处理（NLP）技术和人工智能，提供实时的故事生成、角色互动和事件管理功能，从而帮助DM和玩家们更加轻松地创造和享受游戏体验。</p>
+<h2 id="产品功能">产品功能
+</h2><ul>
+<li><strong>基于向量数据库的规则查询</strong>：根据用户请求，查询数据库中的已有的资料，为用户提供准确的回答</li>
+<li><strong>高度可自定义的大模型交互</strong>：将初始Prompt、Temperature、Top_k等参数通过Web界面开放给用户实时调整</li>
+<li><strong>实时故事生成</strong>：自动生成故事情节和背景，根据玩家的选择和行为动态调整故事方向。同时用户可上传故事模板，方便主持人自定义故事内容</li>
+<li><strong>NPC（非玩家角色）交互管理</strong>：允许DM通过简单的界面输入自定义信息，如NPC的背景故事、目标、秘密等，生成和管理NPC的对话和行为，大大降低主持人的工作量与工作难度</li>
+<li><strong>玩家与角色管理工具</strong>：跟踪玩家角色的发展，包括经验值、技能、装备等信息，为DM提供一套工具，以监控和平衡玩家之间的力量关系，确保游戏的公正性</li>
+</ul>
+<h2 id="技术方案">技术方案
+</h2><p><strong>前端</strong></p>
+<ul>
+<li><strong>QQ端</strong>：使用基于拉格兰框架的海豹核心开发QQ端应用</li>
+<li><strong>Web端</strong></li>
+</ul>
+<p><strong>后端</strong></p>
+<ul>
+<li><strong>Python FastAPI</strong></li>
+</ul>
+<p><strong>RAG</strong></p>
+<ul>
+<li>Langchain-Chatchat</li>
+</ul>
+<blockquote>
+<p><em><a class="link" href="http://www.hell-0.xyz/p/chatbot%e9%a1%b9%e7%9b%ae%e8%af%b4%e6%98%8e/"  target="_blank" rel="noopener"
+    >一个前期demo</a></em></p>
+</blockquote>
+<h1 id="idea2博客阅读助手">IDEA2：博客阅读助手
+</h1><blockquote>
+<p><em><a class="link" href="https://github.com/halitum/datawhale-tutor-helper"  target="_blank" rel="noopener"
+    >项目仓库</a></em></p>
+</blockquote>
+<p>2024Datawhale AI夏令营第四期方向2：大模型开发与应用</p>
+<p>基于浪潮“源”大模型的AI Datawhale助教笔记阅读小助手</p>
+<hr>
+<h2 id="项目背景-1">项目背景
+</h2><p>为了帮助Datawhale的助教们花费更少的时间更好地阅读学习者笔记，我们计划开发这款“DW助教小助手”的应用。该应用将在大语言模型的基础上结合RAG、大语言模型微调等技术实现学习者笔记的量化评分与评语输出。</p>
+<h2 id="产品功能-1">产品功能
+</h2><ul>
+<li><strong>博客内容爬取</strong>：解析笔记链接，爬取博客内容</li>
+<li><strong>批量文章导入</strong>：可一次输入数个url进行批处理操作</li>
+<li><strong>多维度评分</strong>：大模型将输出文章的多维度的具体评分，维度可能包括：内容丰富度、知识深度、内容扩展性、内容准确性</li>
+<li><strong>文章评语撰写</strong>：为评分达到“优秀笔记标准”的文章输出评语，说明这篇文章为什么被评选为优秀笔记</li>
+<li><strong>整理统计信息</strong>：按评分输出所有笔记的统计信息</li>
+</ul>
+<h2 id="技术方案-1">技术方案
+</h2><p>本项目将在云端部署“源大模型”，以处理所有对大语言模型的请求</p>
+<p><strong>前端</strong></p>
+<ul>
+<li><strong>streamlit</strong></li>
+</ul>
+<p><strong>后端</strong></p>
+<ul>
+<li><strong>FastAPI</strong></li>
+</ul>
+<p><strong>大模型开发</strong></p>
+<ul>
+<li><a class="link" href="https://github.com/chatchat-space/Langchain-Chatchat"  target="_blank" rel="noopener"
+    >Langchain-Chatchat</a></li>
+<li><strong>大模型微调</strong>：使用往期笔记建立数据集</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/llm/">LLM</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-3-%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8Brag%E5%AE%9E%E6%88%98/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/1-1-0.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/1-1-0.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Datawhale AI 夏令营] Task 3 源大模型RAG实战</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-task-1-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240827233216175.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240827233216175.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Datawhale AI 夏令营 深度学习] Task 1 机器学习基础</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

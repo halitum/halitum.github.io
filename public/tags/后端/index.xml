@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>后端 on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/tags/%E5%90%8E%E7%AB%AF/</link>
+        <description>Recent content in 后端 on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Sun, 10 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/tags/%E5%90%8E%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>学生管理系统说明.md</title>
+        <link>http://101.200.73.250:80/p/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E.md/</link>
+        <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E.md/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240731113208498.png" alt="Featured image of post 学生管理系统说明.md" /&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

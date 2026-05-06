@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>数据结构 on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+        <description>Recent content in 数据结构 on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Wed, 07 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>2. 线形数据结构</title>
+        <link>http://101.200.73.250:80/p/2.-%E7%BA%BF%E5%BD%A2%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+        <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/2.-%E7%BA%BF%E5%BD%A2%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+        <description>&lt;h2 id=&#34;线性表linear-list&#34;&gt;线性表(Linear List)
+&lt;/h2&gt;&lt;p&gt;由同类型&lt;strong&gt;数据元素&lt;/strong&gt;构成&lt;strong&gt;有序序列&lt;/strong&gt;的线性结构&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;表中元素个数称为线性表的&lt;strong&gt;长度&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;线性表没有元素时，称为&lt;strong&gt;空表&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;表起始位置称&lt;strong&gt;表头&lt;/strong&gt;，表结束位置称&lt;strong&gt;表尾&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;线性表的抽象数据类型描述&#34;&gt;线性表的抽象数据类型描述
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;类型名称&lt;/strong&gt;：线性表（&lt;strong&gt;List&lt;/strong&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;数据对象集&lt;/strong&gt;：线性表是 n (≥0) 个元素构成的有序序列 (a&lt;sub&gt;1&lt;/sub&gt;, a&lt;sub&gt;2&lt;/sub&gt;, &amp;hellip;, a&lt;sub&gt;n&lt;/sub&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;操作集&lt;/strong&gt;：线性表 L ∈ List，整数 i 表示位置，元素 X ∈ ElementType，线性表基本操作主要有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;List MakeEmpty()&lt;/strong&gt;：初始化一个空线性表 L；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ElementType FindKth(int K, List L)&lt;/strong&gt;：根据位序 K，返回相应元素；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;int Find(ElementType X, List L)&lt;/strong&gt;：在线性表 L 中查找 X 的第一次出现位置；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;void Insert(ElementType X, int i, List L)&lt;/strong&gt;：在位序 i 前插入一个新元素 X；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;void Delete(int i, List L)&lt;/strong&gt;：删除指定位序的元素；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;int Length(List L)&lt;/strong&gt;：返回线性表 L 的长度 n。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

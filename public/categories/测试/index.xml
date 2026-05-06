@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>测试 on Halit&#39; blog</title>
+        <link>http://localhost:1313/categories/%E6%B5%8B%E8%AF%95/</link>
+        <description>Recent content in 测试 on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Wed, 09 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>建站纪念</title>
+        <link>http://localhost:1313/p/test-chinese/</link>
+        <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/test-chinese/</guid>
+        <description>&lt;img src="http://localhost:1313/helena-hertz-wWZzXlDpMog-unsplash.jpg" alt="Featured image of post 建站纪念" /&gt;&lt;h1 id=&#34;test&#34;&gt;test
+&lt;/h1&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

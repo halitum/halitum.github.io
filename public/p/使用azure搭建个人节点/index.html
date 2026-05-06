@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="通过公有云创建一台虚拟机前，需要先连接公有云的控制层（如Azure中的ARM——Azure resoureces manager） Azure Portal是网页端的图形化ARM控制台 (除此之外还可使用本地命令行工具Azure CLI、Azure Powershell或在线命令行工具Azure Cloud Shell) [Azure官方教程链接](在 Azure 门户中开始 - Microsoft Azure) 注册Azure账号前你还需要办理一张海外信用卡 使用Azure创建项目与虚拟机\r创建资源组，方便归类资源 资源组创建完成后就可以在里面创建虚拟机了 这里的区域使用East Asia可能会产生一些问题，更换为韩国中部 在选择大小时一定要在“所有大小”中找到B1s并选择。所有其他大小的虚拟机都会产生额外费用 磁盘大小更改成P6 在网络中新建公共IP，将SKU设为基本，分配设为动态。（为了避免静态IP会产生的额外费用） 如果在这一步没有出现动态分配IP的选项，可能是服务器地区选择了East Asia的原因。此时需要重新设定数据中心所在地。 点创建后，选择下载SSH私钥 等待部署完成 之后在VPS资源组中就能查看到刚刚创建的所有资源 选择VPS-Server-ip 将IP拷贝到SSH客户端（如Xshell） 点击连接 用户名输入azureuser 在密钥中导入之前下载的密钥 VPS服务器会在接下来的一年里消耗掉免费额度中的$113（理想情况） Azure虚拟机VPS配置完成 配置服务端&lt;方法一&gt;使用ShadowsocksR\rShadowsocksr服务端\\n Shadowsocks客户端 配置python环境 首先安装conda，步骤参考这篇博客开始使用WSL 在bash激活conda后创建ss环境 1 conda create -n ss python=2.7 1 conda activate ss 1 pip install cymysql 安装ShadowsocksR部署脚本 1 2 sudo apt-get install git git clone https://github.com/halitum/shadowsocksr.git 这个仓库失效了就换个别的备份仓库 1 2 cd shadowsocksr bash initcfg.">
+<title>使用Azure搭建个人节点</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/%E4%BD%BF%E7%94%A8azure%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E8%8A%82%E7%82%B9/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="使用Azure搭建个人节点">
+<meta property='og:description' content="通过公有云创建一台虚拟机前，需要先连接公有云的控制层（如Azure中的ARM——Azure resoureces manager） Azure Portal是网页端的图形化ARM控制台 (除此之外还可使用本地命令行工具Azure CLI、Azure Powershell或在线命令行工具Azure Cloud Shell) [Azure官方教程链接](在 Azure 门户中开始 - Microsoft Azure) 注册Azure账号前你还需要办理一张海外信用卡 使用Azure创建项目与虚拟机\r创建资源组，方便归类资源 资源组创建完成后就可以在里面创建虚拟机了 这里的区域使用East Asia可能会产生一些问题，更换为韩国中部 在选择大小时一定要在“所有大小”中找到B1s并选择。所有其他大小的虚拟机都会产生额外费用 磁盘大小更改成P6 在网络中新建公共IP，将SKU设为基本，分配设为动态。（为了避免静态IP会产生的额外费用） 如果在这一步没有出现动态分配IP的选项，可能是服务器地区选择了East Asia的原因。此时需要重新设定数据中心所在地。 点创建后，选择下载SSH私钥 等待部署完成 之后在VPS资源组中就能查看到刚刚创建的所有资源 选择VPS-Server-ip 将IP拷贝到SSH客户端（如Xshell） 点击连接 用户名输入azureuser 在密钥中导入之前下载的密钥 VPS服务器会在接下来的一年里消耗掉免费额度中的$113（理想情况） Azure虚拟机VPS配置完成 配置服务端&lt;方法一&gt;使用ShadowsocksR\rShadowsocksr服务端\\n Shadowsocks客户端 配置python环境 首先安装conda，步骤参考这篇博客开始使用WSL 在bash激活conda后创建ss环境 1 conda create -n ss python=2.7 1 conda activate ss 1 pip install cymysql 安装ShadowsocksR部署脚本 1 2 sudo apt-get install git git clone https://github.com/halitum/shadowsocksr.git 这个仓库失效了就换个别的备份仓库 1 2 cd shadowsocksr bash initcfg.">
+<meta property='og:url' content='http://101.200.73.250:80/p/%E4%BD%BF%E7%94%A8azure%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E8%8A%82%E7%82%B9/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='VPS' /><meta property='article:tag' content='Azure' /><meta property='article:tag' content='网络代理' /><meta property='article:published_time' content='2024-08-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-07T00:00:00&#43;00:00'/><meta property='og:image' content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240808112356703.png' />
+<meta name="twitter:title" content="使用Azure搭建个人节点">
+<meta name="twitter:description" content="通过公有云创建一台虚拟机前，需要先连接公有云的控制层（如Azure中的ARM——Azure resoureces manager） Azure Portal是网页端的图形化ARM控制台 (除此之外还可使用本地命令行工具Azure CLI、Azure Powershell或在线命令行工具Azure Cloud Shell) [Azure官方教程链接](在 Azure 门户中开始 - Microsoft Azure) 注册Azure账号前你还需要办理一张海外信用卡 使用Azure创建项目与虚拟机\r创建资源组，方便归类资源 资源组创建完成后就可以在里面创建虚拟机了 这里的区域使用East Asia可能会产生一些问题，更换为韩国中部 在选择大小时一定要在“所有大小”中找到B1s并选择。所有其他大小的虚拟机都会产生额外费用 磁盘大小更改成P6 在网络中新建公共IP，将SKU设为基本，分配设为动态。（为了避免静态IP会产生的额外费用） 如果在这一步没有出现动态分配IP的选项，可能是服务器地区选择了East Asia的原因。此时需要重新设定数据中心所在地。 点创建后，选择下载SSH私钥 等待部署完成 之后在VPS资源组中就能查看到刚刚创建的所有资源 选择VPS-Server-ip 将IP拷贝到SSH客户端（如Xshell） 点击连接 用户名输入azureuser 在密钥中导入之前下载的密钥 VPS服务器会在接下来的一年里消耗掉免费额度中的$113（理想情况） Azure虚拟机VPS配置完成 配置服务端&lt;方法一&gt;使用ShadowsocksR\rShadowsocksr服务端\\n Shadowsocks客户端 配置python环境 首先安装conda，步骤参考这篇博客开始使用WSL 在bash激活conda后创建ss环境 1 conda create -n ss python=2.7 1 conda activate ss 1 pip install cymysql 安装ShadowsocksR部署脚本 1 2 sudo apt-get install git git clone https://github.com/halitum/shadowsocksr.git 这个仓库失效了就换个别的备份仓库 1 2 cd shadowsocksr bash initcfg."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240808112356703.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5c83ce115cee591a70a1d036fffd59cb_113467_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halitum'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://scholar.google.com/citations?hl=zh-CN&amp;user=0UXNJG0AAAAJ'
+                        target="_blank"
+                        title="Google Scolar"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="icon icon-tabler icon-tabler-google-scholar" 
+  width="24" 
+  height="24" 
+  viewBox="-1.2 -1.2 24 24" 
+  stroke-width="2" 
+  stroke="currentColor" 
+  fill="none" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+>
+  <path stroke="none" d="M0 0h512v512H0z" fill="none"/>
+  <path d="M16.49109375 12.59296875s0 0.00421875 0.00421875 0.00421875c0.388125 0.8184375 0.6075 1.7339062500000002 0.6075 2.7C17.098593750000003 18.777656250000003 14.28046875 21.6 10.8 21.6s-6.298593750000001 -2.8223437500000004 -6.298593750000001 -6.298593750000001c0 -0.96609375 0.21937500000000001 -1.8815625000000002 0.6075 -2.7 0.07171875 -0.151875 0.151875 -0.30375 0.23625 -0.45140625 0.18562500000000004 -0.320625 0.39656250000000004 -0.62015625 0.6328125 -0.8985937500000001 1.1559375 -1.3753125000000002 2.8898437500000003 -2.24859375 4.826250000000001 -2.24859375 1.4175000000000002 0 2.7253125 0.46828125000000004 3.78 1.26140625 0.38390625 0.29109375000000004 0.7340625 0.62015625 1.0462500000000001 0.99140625 0.23625 0.2784375 0.4471875 0.5821875000000001 0.6328125 0.8985937500000001 0.084375 0.1434375 0.1603125 0.29531250000000003 0.23203125000000002 0.44296875zm1.11375 -0.7931250000000001c-1.2698437500000002 -2.46375 -3.8390625000000003 -4.15125 -6.804843750000001 -4.15125s-5.535 1.6875 -6.804843750000001 4.15125L0 8.55140625 10.8 0l10.8 8.55140625 -3.9951562500000004 3.25265625z">
+  </path>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:halitum0216@gmail.com'
+                        target="_blank"
+                        title="Mail"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com/Halit_beaver'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#使用azure创建项目与虚拟机">使用Azure创建项目与虚拟机</a></li>
+    <li><a href="#配置服务端方法一使用shadowsocksr">配置服务端&lt;方法一&gt;使用ShadowsocksR</a></li>
+    <li><a href="#配置服务端方法二使用v2ray脚本">配置服务端&lt;方法二&gt;使用v2ray脚本</a></li>
+    <li><a href="#配置shadowsocksr客户端">配置ShadowsocksR客户端</a></li>
+    <li><a href="#配置v2ray客户端">配置v2ray客户端</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E4%BD%BF%E7%94%A8azure%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E8%8A%82%E7%82%B9/">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240808112356703.png" loading="lazy" alt="Featured image of post 使用Azure搭建个人节点" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E6%9C%AF/" style="background-color: #2a9d8f; color: #fff;">
+                实用技术
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%BD%BF%E7%94%A8azure%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E8%8A%82%E7%82%B9/">使用Azure搭建个人节点</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 07, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>通过公有云创建一台虚拟机前，需要先连接公有云的控制层（如Azure中的ARM——Azure resoureces manager）</p>
+<p><a class="link" href="https://portal.azure.com/"  target="_blank" rel="noopener"
+    ><strong>Azure Portal</strong></a>是网页端的图形化ARM控制台
+(除此之外还可使用本地命令行工具Azure CLI、Azure Powershell或在线命令行工具Azure Cloud Shell)</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807095915328.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Azure Portal Home Page"
+	
+	
+></p>
+<p>[<em>Azure官方教程链接</em>](<a class="link" href="https://portal.azure.com/#view/Microsoft_Azure_Resources/QuickstartTutorialBlade/checklistId/get-started-with-azure/sectionId/get-started-navigating-the-portal/lessonId/get-started-navigating-azure-portal"  target="_blank" rel="noopener"
+    >在 Azure 门户中开始 - Microsoft Azure</a>)</p>
+<p>注册Azure账号前你还需要办理一张海外信用卡</p>
+<h2 id="使用azure创建项目与虚拟机">使用Azure创建项目与虚拟机
+</h2><p>创建资源组，方便归类资源</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807101056493.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807101056493"
+	
+	
+></p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807101038318.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807101038318"
+	
+	
+></p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807101635609.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807101635609"
+	
+	
+></p>
+<p>资源组创建完成后就可以在里面创建虚拟机了
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807101849508.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807101849508"
+	
+	
+></p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807102944895.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807102944895"
+	
+	
+></p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807103230904.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807103230904"
+	
+	
+></p>
+<p>这里的区域使用East Asia可能会产生一些问题，更换为韩国中部</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807103423534.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807103423534"
+	
+	
+></p>
+<p>在选择大小时一定要在“所有大小”中找到B1s并选择。所有其他大小的虚拟机都会产生额外费用</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807103545708.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807103545708"
+	
+	
+></p>
+<p>磁盘大小更改成P6</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807103722089.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807103722089"
+	
+	
+></p>
+<p>在网络中新建公共IP，将SKU设为基本，分配设为动态。（为了避免静态IP会产生的额外费用）</p>
+<p>如果在这一步没有出现动态分配IP的选项，可能是服务器地区选择了East Asia的原因。此时需要重新设定数据中心所在地。</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807104013335.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807104013335"
+	
+	
+></p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807104336835.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807104336835"
+	
+	
+></p>
+<p>点创建后，选择下载SSH私钥</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807104503449.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807104503449"
+	
+	
+></p>
+<p>等待部署完成</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807104533247.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807104533247"
+	
+	
+></p>
+<p>之后在VPS<strong>资源组</strong>中就能查看到刚刚创建的所有资源</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807104926999.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807104926999"
+	
+	
+></p>
+<p>选择VPS-Server-ip</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807104907412.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807104907412"
+	
+	
+></p>
+<p>将IP拷贝到SSH客户端（如Xshell）</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807105102094.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807105102094"
+	
+	
+></p>
+<p>点击连接</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807105357209.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807105357209"
+	
+	
+></p>
+<p>用户名输入<code>azureuser</code></p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807105514992.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240807105514992"
+	
+	
+></p>
+<p>在密钥中导入之前下载的密钥</p>
+<blockquote>
+<p>VPS服务器会在接下来的一年里消耗掉免费额度中的$113（理想情况）</p>
+</blockquote>
+<hr>
+<p><em>Azure虚拟机VPS配置完成</em></p>
+<h2 id="配置服务端方法一使用shadowsocksr">配置服务端&lt;方法一&gt;使用ShadowsocksR
+</h2><p><a class="link" href="https://github.com/ToyoDAdoubiBackup/shadowsocksr"  target="_blank" rel="noopener"
+    >Shadowsocksr服务端</a>\n
+<a class="link" href="https://shadowsockshelp.github.io/Shadowsocks/download.html"  target="_blank" rel="noopener"
+    >Shadowsocks客户端</a></p>
+<p><strong>配置python环境</strong>
+首先安装conda，步骤参考这篇博客<a class="link" href="http://www.hell-0.xyz/p/%e5%bc%80%e5%a7%8b%e4%bd%bf%e7%94%a8wsl/"  target="_blank" rel="noopener"
+    >开始使用WSL</a>
+在bash激活conda后创建ss环境</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">conda create -n ss <span class="nv">python</span><span class="o">=</span>2.7
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">conda activate ss
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip install cymysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>安装ShadowsocksR部署脚本</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install git
+</span></span><span class="line"><span class="cl">git clone https://github.com/halitum/shadowsocksr.git
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>这个仓库失效了就换个别的备份仓库</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> shadowsocksr
+</span></span><span class="line"><span class="cl">bash initcfg.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编辑shadowsocksr文件夹下的user_config.json</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano user-config.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将server_port改为443，password改为自己的密码。
+其他参数的配置参考这篇博客：<a class="link" href="https://clashv2ray.com/22645.html"  target="_blank" rel="noopener"
+    >详细的 ShadowsocksR 服务端搭建教程 | Clash中文教程网</a></p>
+<p><strong>配置MariaDB</strong>(debian官方指定的MySQL替代品)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install mariadb-server
+</span></span><span class="line"><span class="cl">sudo service mariadb start
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 设置 MariaDB 安全脚本</span>
+</span></span><span class="line"><span class="cl">sudo mysql_secure_installation
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>切换到root用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo su
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&#34;/home/azureuser/miniconda3/bin:</span><span class="nv">$PATH</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> /home/azureuser/miniconda3/etc/profile.d/conda.sh
+</span></span><span class="line"><span class="cl">conda activate ss
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为ss账户添加MariaDB的localhost权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mysql -u root -p
+</span></span><span class="line"><span class="cl">GRANT ALL PRIVILEGES ON *.* TO <span class="s1">&#39;ss&#39;</span>@<span class="s1">&#39;localhost&#39;</span> IDENTIFIED BY <span class="s1">&#39;your_password&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">FLUSH PRIVILEGES<span class="p">;</span>
+</span></span><span class="line"><span class="cl">SET PASSWORD FOR <span class="s1">&#39;ss&#39;</span>@<span class="s1">&#39;localhost&#39;</span> <span class="o">=</span> PASSWORD<span class="o">(</span><span class="s1">&#39;new_password&#39;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">FLUSH PRIVILEGES<span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改db_transfer.py文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DbTransfer</span><span class="p">(</span><span class="n">TransferBase</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">super</span><span class="p">(</span><span class="n">DbTransfer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="bp">self</span><span class="o">.</span><span class="n">user_pass</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">#记录更新此用户流量时被跳过多少次</span>
+</span></span><span class="line"><span class="cl">		<span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;host&#34;</span><span class="p">:</span> <span class="s2">&#34;127.0.0.1&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;port&#34;</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;user&#34;</span><span class="p">:</span> <span class="s2">&#34;ss&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;password&#34;</span><span class="p">:</span> <span class="s2">&#34;pass&#34;</span><span class="p">,</span> <span class="c1"># ————————&gt; 改成你自己的MariaDB密码</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;db&#34;</span><span class="p">:</span> <span class="s2">&#34;shadowsocks&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;node_id&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;transfer_mul&#34;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;ssl_enable&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;ssl_ca&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;ssl_cert&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;ssl_key&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="bp">self</span><span class="o">.</span><span class="n">load_cfg</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动ss服务，并挂到后台</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> shadowsocks
+</span></span><span class="line"><span class="cl">nohup python server.py <span class="p">&amp;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>检查是否成功开启</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">(</span>ss<span class="o">)</span> root@VPS-Server:/home/azureuser/shadowsocksr/shadowsocks# cat nohup.out
+</span></span><span class="line"><span class="cl">2024-08-07 13:23:15 INFO     util.py:85 loading libcrypto from libcrypto.so.1.1
+</span></span><span class="line"><span class="cl">2024-08-07 13:23:15 INFO     shell.py:72 ShadowsocksR 3.4.0 2017-07-27
+</span></span><span class="line"><span class="cl">2024-08-07 13:23:15 INFO     server.py:46 current process RLIMIT_NOFILE resource: soft <span class="m">1024</span> hard <span class="m">1048576</span>
+</span></span><span class="line"><span class="cl">2024-08-07 13:23:15 INFO     asyncdns.py:324 dns server: <span class="o">[(</span><span class="s1">&#39;*****&#39;</span>, 53<span class="o">)]</span>
+</span></span><span class="line"><span class="cl">2024-08-07 13:23:15 INFO     server.py:106 server start with protocol<span class="o">[</span>auth_aes128_md5<span class="o">]</span> password <span class="o">[</span>*****<span class="o">]</span> method <span class="o">[</span>aes-128-ctr<span class="o">]</span> obfs <span class="o">[</span>tls1.2_ticket_auth_compatible<span class="o">]</span> obfs_param <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">2024-08-07 13:23:15 INFO     server.py:122 starting server at <span class="o">[</span>::<span class="o">]</span>:443
+</span></span><span class="line"><span class="cl">2024-08-07 13:23:15 INFO     server.py:142 starting server at 0.0.0.0:443
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>检查ss进程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">(</span>ss<span class="o">)</span> root@VPS-Server:/home/azureuser/shadowsocksr/shadowsocks# ps aux <span class="p">|</span> grep server.py
+</span></span><span class="line"><span class="cl">root       <span class="m">19586</span>  0.0  2.5  <span class="m">28496</span> <span class="m">22212</span> pts/0    S    13:23   0:00 python server.py
+</span></span><span class="line"><span class="cl">root       <span class="m">19863</span>  0.0  0.0   <span class="m">5268</span>   <span class="m">640</span> pts/0    S+   13:43   0:00 grep server.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="配置服务端方法二使用v2ray脚本">配置服务端&lt;方法二&gt;使用v2ray脚本
+</h2><p>使用v2ray自动安装部署脚本（内含广告，赛博洁癖慎用）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo su
+</span></span><span class="line"><span class="cl">bash &lt;<span class="o">(</span>wget -qO- -o- https://git.io/v2ray.sh<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令运行后v2ray自动开始运行，可以：</p>
+<ul>
+<li><code>v2ray status</code> 确认状态</li>
+<li><code>v2ray start</code> 启动一下</li>
+</ul>
+<p>按照下面的例子找一个自己能导入的链接：</p>
+<ul>
+<li><code>v2ray link</code> 生成一个json格式的东东</li>
+<li><code>v2ray qr</code> 生成 vmess 二维码、链接</li>
+<li><code>v2ray ssqr</code> 生成 ss 二维码、链接</li>
+</ul>
+<hr>
+<p><em>服务端配置完成</em></p>
+<h2 id="配置shadowsocksr客户端">配置ShadowsocksR客户端
+</h2><p><strong>步骤 1：下载并配置Clash for windows</strong></p>
+
+<div style="text-align: center; margin: 20px 0;">
+    <a href="http://101.200.73.250:80/files/clash0.19.7z" class="download-button" download>
+        <button style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            clash0.19.7z
+        </button>
+    </a>
+</div>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240807220536454.png" alt="image-20240807220536454" style="zoom:50%;" />
+<p><strong>步骤 2：获取以下 ShadowsocksR 节点信息</strong></p>
+<ul>
+<li>服务器地址：<code>yoursite.com</code></li>
+<li>端口：<code>443</code></li>
+<li>密码：<code>password</code></li>
+<li>加密方式：<code>aes-128-ctr</code></li>
+<li>协议：<code>auth_aes128_md5</code></li>
+<li>混淆方式：<code>tls1.2_ticket_auth</code></li>
+</ul>
+<p><strong>步骤 3：编写 Clash 配置文件</strong></p>
+<p>Clash 的配置文件通常是 YAML 格式。创建 <code>MyConfig.yaml</code> 文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">yamlCopy codeproxies</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;SSRNode&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">ssr</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l">yoursite.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;password&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">cipher</span><span class="p">:</span><span class="w"> </span><span class="l">aes-128-ctr</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">auth_aes128_md5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">obfs</span><span class="p">:</span><span class="w"> </span><span class="l">tls1.2_ticket_auth</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol-param</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">obfs-param</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">udp</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">proxy-groups</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Proxy&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">select</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">proxies</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;SSRNode&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># IP 地址直接连接</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">IP-CIDR,104.21.46.246/32,DIRECT,no-resolve</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">IP-CIDR,104.18.30.226/32,DIRECT,no-resolve</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">IP-CIDR,192.168.0.0/16,DIRECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># 特定域名直接连接</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">DOMAIN-SUFFIX,example.com,DIRECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># 特定域名通过代理连接</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">DOMAIN-SUFFIX,example.org,Proxy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">DOMAIN,github.com,Proxy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">DOMAIN-SUFFIX,google.com,Proxy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">DOMAIN-SUFFIX,youtube.com,Proxy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># 中国大陆的 IP 地址直连</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">GEOIP,CN,DIRECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># 默认策略</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">MATCH,DIRECT</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>步骤 4：导入配置文件</strong></p>
+<ul>
+<li>点击Profile</li>
+<li>点击Import</li>
+<li>选择 <code>config.yaml</code></li>
+</ul>
+<p>最后在选择一个代理模式，选择你创建的节点，即可使用</p>
+<hr>
+<h2 id="配置v2ray客户端">配置v2ray客户端
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">v2ray qr
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ios使用shaowrocket搜码即享</p>
+<p>桌面端参考<a class="link" href="https://github.com/xyz690/v2ray/wiki/V2Ray%e5%ae%a2%e6%88%b7%e7%ab%af%e4%bd%bf%e7%94%a8%e6%95%99%e7%a8%8b"  target="_blank" rel="noopener"
+    >V2Ray客户端使用教程 · xyz690/v2ray Wiki (github.com)</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/vps/">VPS</a>
+        
+            <a href="/tags/azure/">Azure</a>
+        
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/">网络代理</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%AF%B9%E8%B1%A1%E6%B1%A0/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218193807053.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20241218193807053.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">享元模式与对象池</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8mstsc%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240725210353286.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240725210353286.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">云服务器无法使用mstsc解决方法</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E4%BD%BF%E7%94%A8%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E8%BF%9C%E7%A8%8Bssh%E8%BF%9E%E6%8E%A5%E4%BD%A0%E7%9A%84%E4%B8%BB%E6%9C%BA/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240724110856395.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240724110856395.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">使用移动设备远程SSH连接你的主机</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E5%A6%82%E4%BD%95%E5%B0%86windows%E7%9A%84%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86%E5%85%B1%E4%BA%AB%E7%BB%99vmware%E8%99%9A%E6%8B%9F%E6%9C%BA/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240724093853445.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240724093853445.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">如何将Windows的网络代理共享给VMware虚拟机</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8wsl/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240730204447816.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240730204447816.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">开始使用WSL</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
+

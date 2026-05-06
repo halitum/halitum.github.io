@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>机器学习 on Halit&#39; blog</title>
+        <link>http://101.200.73.250:80/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
+        <description>Recent content in 机器学习 on Halit&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Halit</copyright>
+        <lastBuildDate>Tue, 24 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://101.200.73.250:80/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>[Datawhale机器学习教程] 3. 线性模型-对数几率回归</title>
+        <link>http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-3.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</link>
+        <pubDate>Tue, 24 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-3.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" alt="Featured image of post [Datawhale机器学习教程] 3. 线性模型-对数几率回归" /&gt;&lt;h1 id=&#34;对数几率回归&#34;&gt;对数几率回归
+&lt;/h1&gt;&lt;p&gt;on going&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>[Datawhale机器学习教程] 2. 线性模型-线性回归</title>
+        <link>http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-2.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link>
+        <pubDate>Sat, 21 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-2.-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" alt="Featured image of post [Datawhale机器学习教程] 2. 线性模型-线性回归" /&gt;&lt;p&gt;&lt;strong&gt;线性模型基本形式&lt;/strong&gt;
+$$
+f(x) = w^T x + b
+$$&lt;/p&gt;
+&lt;p&gt;其中，$w = (w_1; w_2; \dots; w_d)$。$w$ 和 $b$ 学得之后，模型就得以确定。&lt;/p&gt;
+&lt;p&gt;线性模型形式简单易于建模，且有很好的可解释性(comprehensibility)&lt;/p&gt;
+&lt;h1 id=&#34;线性回归&#34;&gt;线性回归
+&lt;/h1&gt;&lt;h2 id=&#34;-一元线性回归损失函数推导方法&#34;&gt;# 一元线性回归损失函数推导方法
+&lt;/h2&gt;&lt;h3 id=&#34;最小二乘法&#34;&gt;最小二乘法
+&lt;/h3&gt;&lt;p&gt;基于均方误差最小化来进行模型求解的方法称为“最小二乘法”(least square method)&lt;/p&gt;
+&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240921231922658.png&#34; alt=&#34;image-20240921231922658&#34; style=&#34;zoom: 67%;&#34; /&gt;
+$$
+(w^*, b^*) = \arg\min_{(w,b)} \sum_{i=1}^{m} \left( f(x_i) - y_i \right)^2
+$$
+&lt;p&gt;$$
+= \arg\min_{(w,b)} \sum_{i=1}^{m} \left( y_i - w x_i - b \right)^2
+$$&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;扩展：如何将离散特征添加到模型中——&lt;/p&gt;
+&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240921233349910.png&#34; alt=&#34;image-20240921233349910&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;极大似然估计&#34;&gt;极大似然估计
+&lt;/h3&gt;&lt;p&gt;将线性回归模型表述为如下形式：
+$$
+y = wx + b + \epsilon
+$$
+其中 $y$ 是预测值， $wx$ 是真实值。 $\epsilon$ 是误差，且符合正态分布&lt;/p&gt;
+&lt;p&gt;+++&lt;/p&gt;
+&lt;p&gt;$\epsilon$ 的概率密度
+$$
+p(\epsilon) = \frac{1}{\sqrt{2\pi\sigma}} \exp\left( -\frac{\epsilon^2}{2\sigma^2} \right)
+$$&lt;/p&gt;
+&lt;p&gt;将 $\epsilon = y - (wx + b)$ 带入，得到 $y$ 的概率密度函数&lt;/p&gt;
+&lt;p&gt;$$
+p(y) = \frac{1}{\sqrt{2\pi\sigma}} \exp\left( -\frac{(y - (wx + b))^2}{2\sigma^2} \right)
+$$
+使用极大似然估计来估计得到 $w$ 和 $b$ 的值
+$$
+\ln L(w, b) = m \ln \frac{1}{\sqrt{2\pi\sigma}} - \frac{1}{2\sigma^2} \sum_{i=1}^{m} (y_i - wx_i - b)^2
+$$
+也即
+$$
+(w^&lt;em&gt;, b^&lt;/em&gt;) = \arg\min_{(w, b)} \sum_{i=1}^{m} (y_i - wx_i - b)^2
+$$&lt;/p&gt;
+&lt;p&gt;+++&lt;/p&gt;
+&lt;p&gt;该结论与最小二乘法&lt;strong&gt;得出的结论相同&lt;/strong&gt;——均方误差最小化可达到线性回归&lt;/p&gt;
+&lt;h2 id=&#34;如何求的-w-和-b-&#34;&gt;#如何求的 $w$ 和 $b$ ？
+&lt;/h2&gt;&lt;p&gt;可以通过 &lt;code&gt;凸函数的判定定理&lt;/code&gt;&lt;/p&gt;
+&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240922003325964.png&#34; alt=&#34;image-20240922003325964&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;证得线性回归损失函数是关于 $w$ 和 $b$ 的凸函数，则问题化简成求凸函数最值&lt;/p&gt;
+&lt;p&gt;由凸函数性质（凸充分定理）可知，损失函数梯度为0的点（即各个偏导数为0的点）即为损失函数的极小值点，这也是损失函数取得最小值的充分条件&lt;/p&gt;
+&lt;p&gt;带入偏导数为0，求得表达式：
+$$
+w = \frac{\sum_{i=1}^{m} y_i (x_i - \bar{x})}{\sum_{i=1}^{m} x_i^2 - \frac{1}{m} \left( \sum_{i=1}^{m} x_i \right)^2}
+$$&lt;/p&gt;
+&lt;p&gt;$$
+b = \frac{1}{m} \sum_{i=1}^{m} (y_i - wx_i)
+$$&lt;/p&gt;
+&lt;h2 id=&#34;-表达式向量化&#34;&gt;# 表达式向量化
+&lt;/h2&gt;&lt;p&gt;on going&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>[Datawhale机器学习教程] 1. 机器学习绪论</title>
+        <link>http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-1.-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BB%AA%E8%AE%BA/</link>
+        <pubDate>Wed, 18 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://101.200.73.250:80/p/datawhale%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B-1.-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BB%AA%E8%AE%BA/</guid>
+        <description>&lt;img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919004621136.png" alt="Featured image of post [Datawhale机器学习教程] 1. 机器学习绪论" /&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;一些基本概念&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;机器学习：研究关于“学习算法”的学科&lt;/li&gt;
+&lt;li&gt;模型：从数据中学习得到的结果&lt;/li&gt;
+&lt;li&gt;特征向量/示例：数据集中的每条记录&lt;/li&gt;
+&lt;li&gt;特征(feature)/属性(attribute)：反应事件或对象在模仿门面的表现或性质的事项（属性的取值即为属性值，张成的空间为属性空间/样本空间）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;-什么是假设空间&#34;&gt;# 什么是假设空间？
+&lt;/h2&gt;&lt;p&gt;假设空间是机器学习中用于描述所有&lt;strong&gt;可能假设&lt;/strong&gt;的集合，我们试图在这个假设空间中寻找一个或多个与训练数据一致的假设，以便能够对未知数据进行准确的预测。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919002408070.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240919002408070&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;假设空间中与训练集一致的“假设集合”，称为**“版本空间”**。版本空间表示了在现有数据下，所有可能正确的模型集合。&lt;em&gt;学习的目标是缩小版本空间，理想情况下找到唯一的假设。&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-什么是归纳偏好inductive-bias&#34;&gt;# 什么是归纳偏好(Inductive Bias)？
+&lt;/h2&gt;&lt;p&gt;归纳偏好是学习过程中，对某种类型的假设所表现出的倾向，决定了机器学习算法选择哪个假设来构建模型（在训练数据不足以唯一确定模型时，归纳偏好帮助算法选择一个看起来最“正确”的假设。）&lt;/p&gt;
+&lt;p&gt;归纳偏好让算法在等效的假设中做出决策，选择出一个最适合的假设。所谓最适合的假设，就是最符合我们设定的原则的假设&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;常见的&lt;strong&gt;归纳偏好原则&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;奥卡姆剃刀原则：若有多个假设与观察一致，则选最简单的那个&lt;/li&gt;
+&lt;li&gt;平滑性假设：认为相似的输入应有相似的输出&lt;/li&gt;
+&lt;li&gt;最大似然原则：选择使观测数据概率最大的假设&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240919003325192.png&#34; alt=&#34;image-20240919003325192&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;在这个例子中，如果A、B曲线都是符合观察的版本空间，那么如果遵循奥卡姆剃刀原则作为归纳偏好原则，那我们最终将决定使用曲线A的假设空间来构建模型&lt;/p&gt;
+&lt;h2 id=&#34;-没有免费的午餐定理-nfl-定理&#34;&gt;# “&lt;strong&gt;没有免费的午餐&lt;/strong&gt;”定理（ &lt;strong&gt;NFL&lt;/strong&gt; 定理）
+&lt;/h2&gt;&lt;p&gt;内容：当所有“问题”出现的机会相同、或所有问题同等重要时，对于任意两个学习算法而言，他们的期望性能都相同。（但是，所有问题的先验概率是均匀的，这在现实中并不成立。而正相反，数据会具有特定的分布，算法可以利用这些分布特性取得更好的性能）&lt;/p&gt;
+&lt;p&gt;结论：谈论算法的相对优劣，必须要针对具体的学习问题&lt;/p&gt;
+&lt;h2 id=&#34;-机器学习应用领域&#34;&gt;# 机器学习应用领域
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;图像识别&lt;/strong&gt;：用于人脸识别、手写数字识别、自动驾驶中的物体检测等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自然语言处理&lt;/strong&gt;：包括机器翻译、情感分析、文本分类、语音识别和生成等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;推荐系统&lt;/strong&gt;：在电商平台推荐商品，在音乐和视频平台推荐内容，提高用户体验。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;金融预测&lt;/strong&gt;：用于股票价格预测、信用评分、欺诈检测和风险管理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-模型评估与选择&#34;&gt;# 模型评估与选择
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E6%AC%A0%E6%8B%9F%E5%90%88%E5%92%8C%E8%BF%87%E6%8B%9F%E5%90%88png.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;（欠拟合-高偏差 、正常拟合 、过拟合-高方差）&lt;/p&gt;
+&lt;p&gt;欠拟合比较容易解决，增大神经网络学习轮数/扩展决策树分支即可，过拟合则难以克服。实际上，过拟合是无法彻底避免的，而只能被缓解&lt;/p&gt;
+&lt;h3 id=&#34;评估方法&#34;&gt;#评估方法
+&lt;/h3&gt;&lt;p&gt;使用模型在“测试数据”上的误差（测试误差(testing error)）来近似作为模型泛化能力的误差&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;从一整个数据集中划分测试集与训练集的方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;留出法：直接将数据集D 划分为两个互斥的集合。（为避免单次留出得到的估计结果不稳定可靠，往往要进行p次随机划分，最终的评估结果是这p次训练-测试结果的均值）
+&lt;ul&gt;
+&lt;li&gt;交叉验证法：将数据集划分为K个大小相似的互斥子集（k折交叉验证）——1折验证，k-1折训练，轮替进行，最终的评估结果是这p次k折交叉验证结果的均值（一共进行了p*k次训练-测试）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;自助法（有放回采样）：从数据集中pick m次（样本可能被重复pick），将pick到的数据m个数据作为训练集，原数据集种未被pick到的样本点作为测试集。可以避免训练样本规模不同而导致的估计偏差，数据集较小、难以有效划分训练／测试集时很有用。自助法的缺点是，产生的数据集会改变初始数据集的分布&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%92%E5%88%86_%E5%8E%BB%E9%99%A4%E8%83%8C%E6%99%AF.png&#34; alt=&#34;数据集划分_去除背景&#34; style=&#34;zoom:67%;&#34; /&gt;
+&lt;p&gt;&lt;strong&gt;性能度量&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;准确率（precision）度量的是被预测为正例的样本中有多少是真正的正例&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;精确率（Precision）预测为正类的样本中，实际为正类的比例&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;召回率（recall）度量的是正类样本中有多少被预测为正类&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240322170518905.png&#34; alt=&#34;image-20240322170518905&#34; style=&#34;zoom: 33%;&#34; /&gt;
+&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240921230119206.png&#34; alt=&#34;image-20240921230119206&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;&lt;strong&gt;ROC曲线（Receiver Operating Characteristic curve）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;内容是真正类率（True Positive Rate, TPR）（就是指召回率）和假正类率（False Positive Rate, FPR）之间的关系&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;假正类率（FPR）&lt;/p&gt;
+&lt;p&gt;模型错误地将负类识别为正类的比例 FPR = FP / (FP + TN)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://typora-picturelib.oss-cn-beijing.aliyuncs.com/roc.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;roc&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ROC曲线面积（AUC值）越大模型的性能越好&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

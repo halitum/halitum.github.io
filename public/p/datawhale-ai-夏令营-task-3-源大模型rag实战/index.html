@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="# RAG简介\r用途：\r解决了大型模型在知识局限性、数据安全性和生成幻觉等方面的问题 具体流程：\r索引：将文档库分割成较短的 Chunk，即文本块或文档片段，然后构建成向量索引。 检索：计算问题和 Chunks 的相似度，检索出若干个相关的 Chunk。 生成：将检索到的Chunks作为背景信息，生成问题的回答。 # 搭建并使用向量数据库Chroma\r安装Chroma 1 pip install chromadb 上手Chrome 1 2 3 4 5 6 7 8 9 10 11 12 # 创建Chroma客户端 import chromadb client = chromadb.Client() # 创建集合（集合类似于传统数据库中的表） collection = client.create_collection(name=&#34;your_collection_name&#34;) # 添加文档（Chroma会自动处理文本嵌入和索引） collection.add(documents=[&#34;Your first document text&#34;]) # 查询集合 results = collection.query(query_texts=[&#34;Sample query&#34;]) # 基于LangChain的RAG流程\r安装LangChain 1 pip install langchain langchain-community langchain-core langchain-openai unstructured sentence-transformers chromadb 上手LangChain-RAG（详见LangChain官方文档Yuan2.0 | 🦜️🔗 LangChain）">
+<title>[Datawhale AI 夏令营] Task 3 源大模型RAG实战</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-3-%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8Brag%E5%AE%9E%E6%88%98/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="[Datawhale AI 夏令营] Task 3 源大模型RAG实战">
+<meta property='og:description' content="# RAG简介\r用途：\r解决了大型模型在知识局限性、数据安全性和生成幻觉等方面的问题 具体流程：\r索引：将文档库分割成较短的 Chunk，即文本块或文档片段，然后构建成向量索引。 检索：计算问题和 Chunks 的相似度，检索出若干个相关的 Chunk。 生成：将检索到的Chunks作为背景信息，生成问题的回答。 # 搭建并使用向量数据库Chroma\r安装Chroma 1 pip install chromadb 上手Chrome 1 2 3 4 5 6 7 8 9 10 11 12 # 创建Chroma客户端 import chromadb client = chromadb.Client() # 创建集合（集合类似于传统数据库中的表） collection = client.create_collection(name=&#34;your_collection_name&#34;) # 添加文档（Chroma会自动处理文本嵌入和索引） collection.add(documents=[&#34;Your first document text&#34;]) # 查询集合 results = collection.query(query_texts=[&#34;Sample query&#34;]) # 基于LangChain的RAG流程\r安装LangChain 1 pip install langchain langchain-community langchain-core langchain-openai unstructured sentence-transformers chromadb 上手LangChain-RAG（详见LangChain官方文档Yuan2.0 | 🦜️🔗 LangChain）">
+<meta property='og:url' content='http://101.200.73.250:80/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-3-%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8Brag%E5%AE%9E%E6%88%98/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='LLM' /><meta property='article:published_time' content='2024-08-17T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-17T00:00:00&#43;00:00'/><meta property='og:image' content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/1-1-0.png' />
+<meta name="twitter:title" content="[Datawhale AI 夏令营] Task 3 源大模型RAG实战">
+<meta name="twitter:description" content="# RAG简介\r用途：\r解决了大型模型在知识局限性、数据安全性和生成幻觉等方面的问题 具体流程：\r索引：将文档库分割成较短的 Chunk，即文本块或文档片段，然后构建成向量索引。 检索：计算问题和 Chunks 的相似度，检索出若干个相关的 Chunk。 生成：将检索到的Chunks作为背景信息，生成问题的回答。 # 搭建并使用向量数据库Chroma\r安装Chroma 1 pip install chromadb 上手Chrome 1 2 3 4 5 6 7 8 9 10 11 12 # 创建Chroma客户端 import chromadb client = chromadb.Client() # 创建集合（集合类似于传统数据库中的表） collection = client.create_collection(name=&#34;your_collection_name&#34;) # 添加文档（Chroma会自动处理文本嵌入和索引） collection.add(documents=[&#34;Your first document text&#34;]) # 查询集合 results = collection.query(query_texts=[&#34;Sample query&#34;]) # 基于LangChain的RAG流程\r安装LangChain 1 pip install langchain langchain-community langchain-core langchain-openai unstructured sentence-transformers chromadb 上手LangChain-RAG（详见LangChain官方文档Yuan2.0 | 🦜️🔗 LangChain）"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://typora-picturelib.oss-cn-beijing.aliyuncs.com/1-1-0.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hue32e0a2791941aae0b1e703637e2a862_69258_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#-rag简介"># RAG简介</a>
+      <ol>
+        <li><a href="#用途">用途：</a></li>
+        <li><a href="#具体流程">具体流程：</a></li>
+      </ol>
+    </li>
+    <li><a href="#-搭建并使用向量数据库chroma"># 搭建并使用向量数据库Chroma</a></li>
+    <li><a href="#-基于langchain的rag流程"># 基于LangChain的RAG流程</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-3-%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8Brag%E5%AE%9E%E6%88%98/">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/1-1-0.png" loading="lazy" alt="Featured image of post [Datawhale AI 夏令营] Task 3 源大模型RAG实战" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/datawhale%E7%BB%84%E9%98%9F%E5%AD%A6%E4%B9%A0/" style="background-color: #2a9d8f; color: #fff;">
+                DataWhale组队学习
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-3-%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8Brag%E5%AE%9E%E6%88%98/">[Datawhale AI 夏令营] Task 3 源大模型RAG实战</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 17, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="-rag简介"># RAG简介
+</h2><h3 id="用途">用途：
+</h3><p>解决了大型模型在知识局限性、数据安全性和生成幻觉等方面的问题</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240817234227874.png" alt="image-20240817234227874" style="zoom:67%;" />
+<h3 id="具体流程">具体流程：
+</h3><ul>
+<li>
+<p>索引：将文档库分割成较短的 <strong>Chunk</strong>，即文本块或文档片段，然后构建成向量索引。</p>
+</li>
+<li>
+<p>检索：计算问题和 Chunks 的相似度，检索出若干个相关的 Chunk。</p>
+</li>
+<li>
+<p>生成：将检索到的Chunks作为背景信息，生成问题的回答。</p>
+</li>
+</ul>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/1-1-0.png" alt="1-1-0"  />
+<hr>
+<h2 id="-搭建并使用向量数据库chroma"># 搭建并使用向量数据库Chroma
+</h2><p>安装Chroma</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip install chromadb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上手Chrome</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 创建Chroma客户端</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">chromadb</span>
+</span></span><span class="line"><span class="cl"><span class="n">client</span> <span class="o">=</span> <span class="n">chromadb</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建集合（集合类似于传统数据库中的表）</span>
+</span></span><span class="line"><span class="cl"><span class="n">collection</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;your_collection_name&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加文档（Chroma会自动处理文本嵌入和索引）</span>
+</span></span><span class="line"><span class="cl"><span class="n">collection</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">documents</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Your first document text&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查询集合</span>
+</span></span><span class="line"><span class="cl"><span class="n">results</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_texts</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Sample query&#34;</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="-基于langchain的rag流程"># 基于LangChain的RAG流程
+</h2><p>安装LangChain</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip install langchain langchain-community langchain-core langchain-openai unstructured sentence-transformers chromadb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上手LangChain-RAG（详见LangChain官方文档<a class="link" href="https://python.langchain.com/v0.2/docs/integrations/llms/yuan2/"  target="_blank" rel="noopener"
+    >Yuan2.0 | 🦜️🔗 LangChain</a>）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 创建LLM客户端（基于Yuan2.0 Inference-Server）</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langchain.chains</span> <span class="kn">import</span> <span class="n">LLMChain</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langchain_community.llms.yuan2</span> <span class="kn">import</span> <span class="n">Yuan2</span>
+</span></span><span class="line"><span class="cl"><span class="n">infer_api</span> <span class="o">=</span> <span class="s2">&#34;http://127.0.0.1:8000/yuan&#34;</span>	<span class="c1"># default infer_api for a local deployed Yuan2.0 inference server</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始化模型</span>
+</span></span><span class="line"><span class="cl"><span class="n">yuan_llm</span> <span class="o">=</span> <span class="n">Yuan2</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">infer_api</span><span class="o">=</span><span class="n">infer_api</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">temp</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">top_p</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">use_history</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 文档加载和分割：加载你的文档并将其分割成可管理的小块</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">DirectoryLoader</span>
+</span></span><span class="line"><span class="cl"><span class="n">loader</span> <span class="o">=</span> <span class="n">DirectoryLoader</span><span class="p">(</span><span class="s1">&#39;./documents&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">documents</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
+</span></span><span class="line"><span class="cl"><span class="n">text_splitter</span> <span class="o">=</span> <span class="n">RecursiveCharacterTextSplitter</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">split_docs</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建嵌入：将你的文本块转换成嵌入</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langchain.embeddings</span> <span class="kn">import</span> <span class="n">SentenceTransformerEmbeddings</span>
+</span></span><span class="line"><span class="cl"><span class="n">embeddings</span> <span class="o">=</span> <span class="n">SentenceTransformerEmbeddings</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&#34;all-MiniLM-L6-v2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 加载文档到向量数据库：使用Chroma存储和检索嵌入：</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langchain.vectorstores.chroma</span> <span class="kn">import</span> <span class="n">Chroma</span>
+</span></span><span class="line"><span class="cl"><span class="n">db</span> <span class="o">=</span> <span class="n">Chroma</span><span class="o">.</span><span class="n">from_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检索相关内容</span>
+</span></span><span class="line"><span class="cl"><span class="n">matching_docs</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="s1">&#39;你的查询&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从LLM生成响应：使用检索到的文档和用户的查询来生成响应</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langchain.chains.question_answering</span> <span class="kn">import</span> <span class="n">load_qa_chain</span>
+</span></span><span class="line"><span class="cl"><span class="n">chain</span> <span class="o">=</span> <span class="n">load_qa_chain</span><span class="p">(</span><span class="n">llm</span><span class="p">,</span> <span class="n">chain_type</span><span class="o">=</span><span class="s2">&#34;stuff&#34;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">answer</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_documents</span><span class="o">=</span><span class="n">matching_docs</span><span class="p">,</span> <span class="n">question</span><span class="o">=</span><span class="s1">&#39;你的查询&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/llm/">LLM</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-task-1-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91idea/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/Datawhale.jpg" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/Datawhale.jpg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Datawhale AI 夏令营] Task 1 大模型应用开发idea</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/datawhale-ai-%E5%A4%8F%E4%BB%A4%E8%90%A5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-task-1-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240827233216175.png" loading="lazy" data-key="" data-hash="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240827233216175.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[Datawhale AI 夏令营 深度学习] Task 1 机器学习基础</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

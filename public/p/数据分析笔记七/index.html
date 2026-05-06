@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=80&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="7. 数据建模与模型评估">
+<title>数据分析笔记（七）</title>
+
+<link rel='canonical' href='http://101.200.73.250:80/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%B8%83/'>
+
+<link rel="stylesheet" href="/scss/style.min.e8c7fca7d1c9294aa7a4f3426c225ee26540f7d94e39be0b5a4a5c8a49ca5a25.css"><meta property='og:title' content="数据分析笔记（七）">
+<meta property='og:description' content="7. 数据建模与模型评估">
+<meta property='og:url' content='http://101.200.73.250:80/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%B8%83/'>
+<meta property='og:site_name' content='Halit&#39; blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='' /><meta property='article:published_time' content='2024-03-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-28T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="数据分析笔记（七）">
+<meta name="twitter:description" content="7. 数据建模与模型评估">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5c83ce115cee591a70a1d036fffd59cb_113467_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍔</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Halit&#39; blog</a></h1>
+            <h2 class="site-description">海狸的博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halitum'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://scholar.google.com/citations?hl=zh-CN&amp;user=0UXNJG0AAAAJ'
+                        target="_blank"
+                        title="Google Scolar"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="icon icon-tabler icon-tabler-google-scholar" 
+  width="24" 
+  height="24" 
+  viewBox="-1.2 -1.2 24 24" 
+  stroke-width="2" 
+  stroke="currentColor" 
+  fill="none" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+>
+  <path stroke="none" d="M0 0h512v512H0z" fill="none"/>
+  <path d="M16.49109375 12.59296875s0 0.00421875 0.00421875 0.00421875c0.388125 0.8184375 0.6075 1.7339062500000002 0.6075 2.7C17.098593750000003 18.777656250000003 14.28046875 21.6 10.8 21.6s-6.298593750000001 -2.8223437500000004 -6.298593750000001 -6.298593750000001c0 -0.96609375 0.21937500000000001 -1.8815625000000002 0.6075 -2.7 0.07171875 -0.151875 0.151875 -0.30375 0.23625 -0.45140625 0.18562500000000004 -0.320625 0.39656250000000004 -0.62015625 0.6328125 -0.8985937500000001 1.1559375 -1.3753125000000002 2.8898437500000003 -2.24859375 4.826250000000001 -2.24859375 1.4175000000000002 0 2.7253125 0.46828125000000004 3.78 1.26140625 0.38390625 0.29109375000000004 0.7340625 0.62015625 1.0462500000000001 0.99140625 0.23625 0.2784375 0.4471875 0.5821875000000001 0.6328125 0.8985937500000001 0.084375 0.1434375 0.1603125 0.29531250000000003 0.23203125000000002 0.44296875zm1.11375 -0.7931250000000001c-1.2698437500000002 -2.46375 -3.8390625000000003 -4.15125 -6.804843750000001 -4.15125s-5.535 1.6875 -6.804843750000001 4.15125L0 8.55140625 10.8 0l10.8 8.55140625 -3.9951562500000004 3.25265625z">
+  </path>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:halitum0216@gmail.com'
+                        target="_blank"
+                        title="Mail"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com/Halit_beaver'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#模型搭建步骤">模型搭建步骤：</a></li>
+    <li><a href="#模型评估">模型评估</a>
+      <ol>
+        <li><a href="#1--交叉验证cross-validation-cv">1.  交叉验证（cross-validation, CV）</a></li>
+        <li><a href="#2--混淆矩阵">2.  混淆矩阵</a></li>
+        <li><a href="#3-roc曲线receiver-operating-characteristic-curve">3. ROC曲线（Receiver Operating Characteristic curve）</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="background-color: #2a9d8f; color: #fff;">
+                数据分析
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%B8%83/">数据分析笔记（七）</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            7. 数据建模与模型评估
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 28, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p><strong>Seaborn</strong>
+基于Matplotlib的数据可视化库，是Matplotlib的补充而非替代</p>
+</blockquote>
+<blockquote>
+<p><strong>Scikit-learn</strong> (简称 sklearn)</p>
+<p>一个机器学习库。基于 NumPy、SciPy 和 matplotlib 。用于数据挖掘和数据分析</p>
+</blockquote>
+<blockquote>
+<p><strong>机器学习任务分类</strong></p>
+<ul>
+<li>监督学习：从标记的训练数据进行学习</li>
+<li>无监督学习：从未经标记或分类的数据进行学习</li>
+</ul>
+</blockquote>
+<p>机器学习算法模型选择：</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95%E9%80%89%E6%8B%A9%E8%B7%AF%E5%BE%84.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>刚开始我们总是先尝试使用一个基本的模型来作为其baseline，进而再训练其他模型做对比，最终选择泛化能力或性能比较好的模型</p>
+<blockquote>
+<p><strong>数据拟合</strong></p>
+<ul>
+<li>一项统计学技术，用来找到最佳的函数模型，来描述两个或多个变量之间的关系</li>
+<li>可以用来理解变量之间的相互作用，预测未来的数据点，以及对模型的预测能力进行评估</li>
+</ul>
+</blockquote>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E6%AC%A0%E6%8B%9F%E5%90%88%E5%92%8C%E8%BF%87%E6%8B%9F%E5%90%88png.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>（欠拟合-高偏差 、正常拟合 、过拟合-高方差）</p>
+<blockquote>
+<p><strong>正则化</strong></p>
+<p>一种用来防止模型过拟合的技术，通过在损失函数中添加一个惩罚项来实现。这个惩罚项会惩罚模型的复杂度，通常与模型参数的大小有关</p>
+<p>正则化主要使用在逻辑回归、支持向量机（SVM）等线性模型中</p>
+</blockquote>
+<h2 id="模型搭建步骤">模型搭建步骤：
+</h2><ol>
+<li>
+<p>设定自变量和因变量</p>
+<ul>
+<li>
+<p>自变量（x）：模型输入，对结果的影响因素</p>
+</li>
+<li>
+<p>因变量（y）：模型输出，想要预测的对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="n">data</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>划分训练集和测试集</p>
+<pre class="mermaid">graph LR
+    A[数据] --&gt; B[训练数据]
+    A --&gt; C[测试数据]
+    B --&gt; D[用来学习 获取参数]
+    B --&gt; F[又叫监督数据]
+    C --&gt; E[用来评价模型能力]
+  </pre>
+  <ul>
+<li>
+<p>划分作用：价模型泛化能力——处理未被观察过的数据的能力</p>
+</li>
+<li>
+<p>sklearn中切割数据集的方法为<code>train_test_split</code>（默认测试集占总数据量25%）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>模型选择</p>
+<ul>
+<li>
+<p><strong>逻辑回归模型</strong></p>
+<ul>
+<li>
+<p>基于线性模型的分类模型（主要用于二分类问题）</p>
+</li>
+<li>
+<p>是一种线性分类器（利用sigmoid计算概率），因此难以拟合非线性关系的数据；模型易受离群点影响，需要事先进行数据清洗</p>
+</li>
+<li>
+<p>实现（scikit-learn）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="c1"># 导入lr模型</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建逻辑回归模型</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 训练模型</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 预测测试集</span>
+</span></span><span class="line"><span class="cl"><span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看score</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Training set score: </span><span class="si">{:.2f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Testing set score: </span><span class="si">{:.2f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>调参</p>
+<ul>
+<li><strong><code>C</code></strong>：较小表示正则化越强，默认为1</li>
+<li><strong><code>max_iter</code></strong>：求解器的最大迭代次数。增大可以帮助模型收敛</li>
+<li><strong><code>class_weight</code></strong>：指定类别权重</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>随机森林模型</strong></p>
+<ul>
+<li>基于树的分类模型(除了分类也可用于回归任务)</li>
+<li>一种集成学习方法，它通过构建多个决策树（森林）并输出模式（分类）或平均预测（回归）的方式来工作</li>
+</ul>
+<blockquote>
+<p>决策树：一个预测模型</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E5%86%B3%E7%AD%96%E6%A0%91.png" style="zoom:50%;" />
+</blockquote>
+<ul>
+<li>
+<p>实现（scikit-learn）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="c1"># 导入lr模型</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 默认参数的随机森林分类模型</span>
+</span></span><span class="line"><span class="cl"><span class="n">rfc</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">rfc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 输出score</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Training set score: </span><span class="si">{:.2f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rfc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Testing set score: </span><span class="si">{:.2f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rfc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>调参</p>
+<ul>
+<li><strong><code>n_estimators</code></strong>：森林中树的数量（默认为100）。增大可以用计算成本（性能）换取模型稳定性和准确性</li>
+<li><strong><code>max_depth</code></strong>：树的最大深度。过小容易欠拟合，过大容易过拟合</li>
+<li><strong><code>min_samples_split</code></strong>：分裂内部节点所需的最小样本数（默认为2）。增大可以避免过拟合</li>
+<li><strong><code>min_samples_leaf</code></strong>：叶节点所需的最小样本数。增大可以防止过拟合</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>通用调参</p>
+<ol>
+<li>
+<p>正则化处理（使用penalty参数来指定正则化项的类型）</p>
+<ol>
+<li>
+<p>L1正则化（penalty=&lsquo;l1&rsquo;）</p>
+<ul>
+<li>
+<p>将参数的绝对值之和加到原始损失函数上</p>
+</li>
+<li>
+<p>很多参数会被压缩到0，仅保留少数权重较大的特征</p>
+</li>
+<li>
+<p>使得模型更加简单，有助于解释和理解</p>
+</li>
+</ul>
+</li>
+<li>
+<p>L2正则化（penalty=&lsquo;l2&rsquo;）</p>
+<ul>
+<li>
+<p>将参数的平方和加到原始损失函数上</p>
+</li>
+<li>
+<p>倾向于惩罚较大的参数，使得所有参数都被适度缩小，但不会完全缩小到0</p>
+</li>
+<li>
+<p>有助于处理特征之间的共线性问题，提高模型的稳定性</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>网格搜索：尝试参数的多个组合，并通过交叉验证来评估每种组合的性能，从而找到最佳参数</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="模型评估">模型评估
+</h2><blockquote>
+<p>模型评估是为了知道模型的泛化能力</p>
+</blockquote>
+<h3 id="1--交叉验证cross-validation-cv">1.  交叉验证（cross-validation, CV）
+</h3><p>用来评估泛化性能，限制过拟合</p>
+<p>在k 折交叉验证（k-fold cross-validation），数据被划分为k部分（k通常取 5 或 10），每次取其中一部分为测试集，其他部分为训练集，共训练k次（提高k用计算成本换取模型稳定性和准确性）。最终的模型性能是这K次评估结果的平均值</p>
+<p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><strong>代码实现</strong>：交叉验证使用sklearn.model_selection中的cross_val_score函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 平均交叉验证分数</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Average cross-validation score: </span><span class="si">{:.2f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2--混淆矩阵">2.  混淆矩阵
+</h3><p>一种模型评估工具</p>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240322170518905.png" alt="image-20240322170518905" style="zoom: 33%;" />
+<ul>
+<li>
+<p>准确率（precision）度量的是被预测为正例的样本中有多少是真正的正例</p>
+</li>
+<li>
+<p>精确率（Precision）预测为正类的样本中，实际为正类的比例</p>
+</li>
+<li>
+<p>召回率（recall）度量的是正类样本中有多少被预测为正类</p>
+</li>
+</ul>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B50.png" style="zoom:50%;" />
+<ul>
+<li>
+<p>F-分数是准确率与召回率的调和平均，用于综合考虑精确率和召回率</p>
+<blockquote>
+<p>f-的意义是在某些情况下准确率与召回率间存在冲突，需要对他们综合考虑来评判模型性能</p>
+</blockquote>
+</li>
+</ul>
+<img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240322172824512.png" alt="image-20240322172824512" style="zoom:67%;" />
+<p>混淆矩阵主要应用于分类任务（尤其是在二分类）。可以用来理解模型在预测不同类别时的表现，尤其是在<strong>数据集类别不平衡</strong>时，以及在某些场景下模型对于少数类的准确预测通常比整体准确率更重要时。</p>
+<p><strong>代码实现</strong>：sklearn.metrics中的confusion_matrix()函数</p>
+<blockquote>
+<p>精确率、召回率以及f-分数可使用<code>classification_report</code>模块</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 训练模型</span>
+</span></span><span class="line"><span class="cl"><span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 模型预测结果</span>
+</span></span><span class="line"><span class="cl"><span class="n">pred</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 混淆矩阵</span>
+</span></span><span class="line"><span class="cl"><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240322173119425.png" alt="image-20240322173119425"  />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 精确率、召回率以及f1-score</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">pred</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/image-20240322173142830.png" alt="image-20240322173142830" style="zoom:67%;" />
+<h3 id="3-roc曲线receiver-operating-characteristic-curve">3. ROC曲线（Receiver Operating Characteristic curve）
+</h3><p>用于对混淆矩阵信息的可视化。内容是真正类率（True Positive Rate, TPR）（就是指召回率）和假正类率（False Positive Rate, FPR）之间的关系</p>
+<blockquote>
+<p>假正类率（FPR）</p>
+<p>模型错误地将负类识别为正类的比例 FPR = FP / (FP + TN)</p>
+</blockquote>
+<p><strong>代码实现</strong>：sklearn.metrics中的roc_curve()函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;ROC Curve&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&#34;FPR&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&#34;TPR (recall)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 找到最接近于0的阈值</span>
+</span></span><span class="line"><span class="cl"><span class="n">close_zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">thresholds</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">[</span><span class="n">close_zero</span><span class="p">],</span> <span class="n">tpr</span><span class="p">[</span><span class="n">close_zero</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;threshold zero&#34;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&#34;none&#34;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">mew</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://typora-picturelib.oss-cn-beijing.aliyuncs.com/roc.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="roc"
+	
+	
+></p>
+<p>ROC曲线面积（AUC值）越大模型的性能越好</p>
+<blockquote>
+<p>多分类问题下的ROC曲线：</p>
+<ul>
+<li>一对多（One-vs-All）：对于每个类别，将其视为正类，其他所有类别视为负类（如果有N个类别，就会有N条ROC曲线）</li>
+<li>一对一（One-vs-One）：每对组合都可以绘制一个ROC曲线（共有N(N-1)/2条曲线）</li>
+</ul>
+</blockquote>
+<p>ROC曲线用来识别模型在哪些类别上表现不佳，进而进行针对性的改进</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E5%85%AD/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（六）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%BA%94/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（五）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E5%9B%9B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（四）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%B8%89/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（三）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%AC%94%E8%AE%B0%E4%BA%8C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数据分析笔记（二）</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Halit
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
+
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
