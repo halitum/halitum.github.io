@@ -1212,7 +1212,7 @@ Scenario: A microservice application ("The PodTato Head", https://github.com/cnc
 
 ·
 
-![示例应用 Sample Application](./img/08_1_sample.png)
+![示例应用 Sample Application](img/08_1_sample.png)
 
 应将最佳实践应用于此应用部署。·
 
@@ -1236,7 +1236,7 @@ With a growing count of Operators typically used within the lifecycle of applica
 
 ·
 
-![分布式运维 Distributed Ops](./img/09_1_distributedops.png)
+![分布式运维 Distributed Ops](img/09_1_distributedops.png)
 
 协调整个技术栈的设置和生命周期可能仍然复杂。控制元数据资源的 Operator 可以通过协调技术栈的各个部分来帮助用户屏蔽这种复杂性，并暴露一个代表整个技术栈的 CRD。如果是这种情况，*Meta* Operator 应该将工作委托给其他 Operator 来处理更具体的部分。·
 
@@ -1252,7 +1252,7 @@ The controllers that own these sub-components of stacks can appear in two ways:�
 
 - Operator 分发包可以由多个独立的控制器组成，每个控制器处理技术栈的一个子组件，加上一个主控制器（负责面向最终用户的 CRD，代表整个技术栈）。将这样的多控制器 Operator 作为单一包部署会导致所有控制器同时运行（每个一个 `Pod`），但只有面向最终用户的 API/CRD 被实际暴露和文档化供公众使用。当这种情况发生时，负责此 API 的控制器将若干职责委托给使用"内部" CRD 打包的其他控制器。当整个"技术栈"由同一组 Operator 作者拥有和开发且"从属"控制器作为独立项目没有意义时，这很有用。对最终用户来说，这组控制器仍然表现为单个 Operator。这里的主要好处是 Operator 项目内的关注点分离。 An operator distribution package could consist of multiple separate controllers, each handling a sub-component of the stack plus a main controller ( Responsible for the end-user facing CRD, representing the stack as a whole). Deploying such a multi-controller operator as a single package would result in all controllers running at once (one `Pod` each), but only the end-user facing API/CRD is actually exposed and documented for public consumption. When that happens, the controller responsible for this API delegates several duties to the other controllers, that are part of it's packaged using "internal" CRDs. This is useful when the whole "stack" is owned and developed by the same group of operator authors and the "subordinate" controllers don't make sense as a standalone project. To an end-user this set of controllers still appears as a single Operator. The main benefit here is separation of concerns within an operator project.·
 
-![技术栈 Operator Stack-Operator](./img/08_2_umbrella.png)
+![技术栈 Operator Stack-Operator](img/08_2_umbrella.png)
 
 从技术上讲，会有一个由 Operator 管理的整个技术栈的自定义资源定义。此 Operator 为技术栈的每个组件创建一个自定义资源，这些组件又由 Operator 管理，管理底层资源。·
 
