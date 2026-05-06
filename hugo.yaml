@@ -5,13 +5,9 @@ paginate: 10
 title: Halit' blog
 copyright: Halit
 
-# Theme i18n support
-# Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
 DefaultContentLanguage: zh-cn
 
-# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
-# This will make .Summary and .WordCount behave correctly for CJK languages.
-hasCJKLanguage: false
+hasCJKLanguage: true
 
 languages:
     zh-cn:
@@ -22,10 +18,8 @@ languages:
             description: Halit' blog
 
 services:
-    # Change it to your Disqus shortname before using
     disqus:
         shortname: "hugo-theme-stack"
-    # GA Tracking ID
     googleAnalytics:
         id:
 
@@ -49,8 +43,9 @@ params:
         lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
-        emoji: 🍔   #🍥
-        subtitle: 海狸的博�?        avatar:
+        emoji: 🍔
+        subtitle: 海狸的博客
+        avatar:
             enabled: true
             local: true
             src: img/avatar.png
@@ -83,7 +78,7 @@ params:
             repo:
             issueTerm: pathname
             label:
-            theme:        
+            theme:
 
         remark42:
             host:
@@ -98,7 +93,6 @@ params:
             clientSecret:
             autoCreateIssue: false
 
-        # Waline client configuration see: https://waline.js.org/en/reference/component.html
         waline:
             serverURL:
             lang:
@@ -119,11 +113,10 @@ params:
             path:
             lang:
 
-        # See https://cactus.chat/docs/reference/web-client/#configuration for description of the various options
         cactus:
             defaultHomeserverUrl: "https://matrix.cactus.chat:8448"
             serverName: "cactus.chat"
-            siteName: "" # You must insert a unique identifier here matching the one you registered (See https://cactus.chat/docs/getting-started/quick-start/#register-your-site)
+            siteName: ""
 
         giscus:
             repo:
@@ -163,10 +156,7 @@ params:
 
     opengraph:
         twitter:
-            # Your Twitter username
             site:
-
-            # Available values: summary, summary_large_image
             card: summary_large_image
 
     defaultImage:
@@ -176,10 +166,7 @@ params:
             src:
 
     colorScheme:
-        # Display toggle
         toggle: true
-
-        # Available values: auto, light, dark
         default: auto
 
     imageProcessing:
@@ -188,9 +175,6 @@ params:
         content:
             enabled: true
 
-### Custom menu
-### See https://stack.jimmycai.com/config/menu
-### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
 menu:
     main: []
 
@@ -206,7 +190,7 @@ menu:
           url: https://x.com/Halit_beaver
           params:
               icon: brand-twitter
-        
+
         - identifier: google scolar
           name: Google Scolar
           url: https://scholar.google.com/citations?hl=zh-CN&user=0UXNJG0AAAAJ
@@ -233,7 +217,6 @@ related:
 markup:
     goldmark:
         renderer:
-            ## Set to true if you have HTML content inside Markdown
             unsafe: true
     tableOfContents:
         endLevel: 4
