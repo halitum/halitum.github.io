@@ -1,3 +1,11 @@
+---
+title: "初窥 Github Actions 工作流"
+date: 2024-02-01
+description: "Github Actions 工作流入门：什么时候 + 做什么事"
+tags: ["GitHub", "CI/CD"]
+categories: ["编程语言"]
+---
+
 # 初窥 Github Actions 工作流
 
 一句话总结 Github Actions：什么时候 + 做什么事
