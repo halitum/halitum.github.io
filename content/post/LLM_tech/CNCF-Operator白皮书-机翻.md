@@ -3,7 +3,7 @@ title: "CNCF Operator 白皮书 最终版（机翻）"
 date: 2025-12-01
 description: "CNCF Operator White Paper 最终版中英双语机翻"
 tags: ["Kubernetes", "Operator", "云原生"]
-categories: ["大模型技术"]
+categories: ["分布式系统"]
 ---
 
 # CNCF Operator 白皮书 - 最终版 CNCF Operator White Paper - Final Version
