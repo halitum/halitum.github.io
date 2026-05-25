@@ -21,7 +21,7 @@ services:
     disqus:
         shortname: "hugo-theme-stack"
     googleAnalytics:
-        id:
+        id: G-HHXMLDRR7B
 
 permalinks:
     post: /p/:slug/
