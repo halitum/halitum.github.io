@@ -59,8 +59,8 @@ params:
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
-        enabled: false
-        provider: disqus
+        enabled: true
+        provider: giscus
 
         disqusjs:
             shortname:
@@ -119,13 +119,13 @@ params:
             siteName: ""
 
         giscus:
-            repo:
-            repoID:
-            category:
-            categoryID:
-            mapping:
-            lightTheme:
-            darkTheme:
+            repo: halitum/halitum.github.io
+            repoID: R_kgDOSVq8wA
+            category: Announcements
+            categoryID: DIC_kwDOSVq8wM4C9yTY
+            mapping: pathname
+            lightTheme: light
+            darkTheme: dark_dimmed
             reactionsEnabled: 1
             emitMetadata: 0
 
