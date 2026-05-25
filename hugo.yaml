@@ -125,7 +125,7 @@ params:
             categoryID: DIC_kwDOSVq8wM4C9yTY
             mapping: pathname
             lightTheme: light
-            darkTheme: dark_dimmed
+            darkTheme: gruvbox_dark
             reactionsEnabled: 1
             emitMetadata: 0
 
